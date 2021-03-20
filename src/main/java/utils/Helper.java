@@ -13,12 +13,12 @@ public class Helper {
     public Connection getConnexionPsql() throws Exception {
     	Connection connexion = null;
     	try {
-            Class.forName("org.postgresql.Driver");
-            /*this.connexion = DriverManager
+            //Class.forName("org.postgresql.Driver");
+            this.connexion = DriverManager
             .getConnection("postgres://bsalfegetstjgt:4a81fcf6648805e3e2ffe666ddce79672e8bfb6abd4e5473d47f5c23d98ce7d8@ec2-34-195-233-155.compute-1.amazonaws.com:5432/d9dgm3pbn81te3",
              "bsalfegetstjgt", 
-             "4a81fcf6648805e3e2ffe666ddce79672e8bfb6abd4e5473d47f5c23d98ce7d8");*/
-            connexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FINDAY", "adminFinday", "123456");
+             "4a81fcf6648805e3e2ffe666ddce79672e8bfb6abd4e5473d47f5c23d98ce7d8");
+            //connexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FINDAY", "adminFinday", "123456");
             connexion.setAutoCommit(false);
         } catch (SQLException e) {
             throw e;
