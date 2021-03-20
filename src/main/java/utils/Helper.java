@@ -14,7 +14,7 @@ public class Helper {
     	Connection connexion = null;
     	try {
             //Class.forName("org.postgresql.Driver");
-            this.connexion = DriverManager
+            connexion = DriverManager
             .getConnection("postgres://bsalfegetstjgt:4a81fcf6648805e3e2ffe666ddce79672e8bfb6abd4e5473d47f5c23d98ce7d8@ec2-34-195-233-155.compute-1.amazonaws.com:5432/d9dgm3pbn81te3",
              "bsalfegetstjgt", 
              "4a81fcf6648805e3e2ffe666ddce79672e8bfb6abd4e5473d47f5c23d98ce7d8");
