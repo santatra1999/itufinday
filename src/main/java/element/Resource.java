@@ -30,6 +30,11 @@ public class Resource {
 	@Autowired
 	private AchatoffreDaoService achatOffreService;	
 	
+	@GetMapping("/hello")
+	public String helloWorld() {
+		return "Hello world";
+	}
+	
 	@GetMapping("/client/{identif}/{mdp}")
 	public Header connexion(@PathVariable String identif,@PathVariable String mdp) throws Exception {
 		Header header = new Header();
