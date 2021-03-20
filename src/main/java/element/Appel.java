@@ -1,0 +1,62 @@
+package element;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+public class Appel {
+	
+	int idappel;
+	
+	String numSender;
+	
+	String numRecep;
+	
+	double duree;
+	
+	String date;
+	
+	public int getIdappel() {
+		return idappel;
+	}
+	public void setIdappel(int idappel) {
+		this.idappel = idappel;
+	}
+	public String getNumSender() {
+		return numSender;
+	}
+	public void setNumSender(String numSender) {
+		this.numSender = numSender;
+	}
+	public String getNumRecep() {
+		return numRecep;
+	}
+	public void setNumRecep(String numRecep) {
+		this.numRecep = numRecep;
+	}
+	public double getDuree() {
+		return duree;
+	}
+	public void setDuree(double duree) {
+		this.duree = duree;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public Appel(int idappel, String numSender, String numRecep, double duree, String date) {
+		super();
+		this.setNumSender(numSender);
+		this.setNumRecep(numRecep);
+		this.setDuree(duree);
+		this.setDate(date);
+		this.setIdappel(idappel);
+	}
+	public Appel() {
+		super();
+	}
+	
+	
+}
