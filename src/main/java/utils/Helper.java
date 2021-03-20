@@ -15,9 +15,9 @@ public class Helper {
     	try {
             //Class.forName("org.postgresql.Driver");
             connexion = DriverManager
-            .getConnection("postgres://bsalfegetstjgt:4a81fcf6648805e3e2ffe666ddce79672e8bfb6abd4e5473d47f5c23d98ce7d8@ec2-34-195-233-155.compute-1.amazonaws.com:5432/d9dgm3pbn81te3",
-             "bsalfegetstjgt", 
-             "4a81fcf6648805e3e2ffe666ddce79672e8bfb6abd4e5473d47f5c23d98ce7d8");
+            .getConnection("    postgres://jiyomcuyrxqxyi:05a8287e0385101cbce0ca05adfdc883707c85abd1058f6a683c93fa048df115@ec2-3-221-49-44.compute-1.amazonaws.com:5432/d9pd7mk2lhhd2b",
+             "jiyomcuyrxqxyi", 
+             "05a8287e0385101cbce0ca05adfdc883707c85abd1058f6a683c93fa048df115");
             //connexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FINDAY", "adminFinday", "123456");
             connexion.setAutoCommit(false);
         } catch (SQLException e) {
