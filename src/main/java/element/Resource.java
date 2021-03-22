@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import utils.Header;
 
-@CrossOrigin(origins = "http://localhost:5555")
+@CrossOrigin(origins = "*", allowedHeaders="*")
 @RequestMapping(value = "/finday")
 @RestController
 public class Resource {
@@ -50,7 +52,7 @@ public class Resource {
 			}
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
-			//throw e;
+			throw e;
 		}
 		return header;
 	}	
@@ -126,7 +128,7 @@ public class Resource {
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
-			//throw e;
+			throw e;
 		}
 		return header;		
 	}		
@@ -144,7 +146,7 @@ public class Resource {
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
-			// throw e;
+			throw e;
 		}
 		return header;		
 	}	
@@ -159,7 +161,7 @@ public class Resource {
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
-			// throw e;
+			throw e;
 		}
 		return header;		
 	}
@@ -176,7 +178,7 @@ public class Resource {
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
-			// throw e;
+			throw e;
 		}
 		return header;		
 	}	
@@ -193,25 +195,63 @@ public class Resource {
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
-			// throw e;
+			throw e;
 		}
 		return header;		
 	}	
 	
-//	@PostMapping("/typeoffre")
-/*	public Header saveTypeOffre(@RequestParam HashMap<String, Object> formData) throws Exception {
+	@GetMapping("/depotvalide/{date_mvt}/{valeur}")
+	public Header saveTypeOffre(@PathVariable String date_mvt,@PathVariable double valeur,@RequestHeader("Authorization") String token) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			new OffreDaoService().saveTypeOffre(formData);
+			String validToken = token.split(" ")[1];
+			int idclient = clientService.getIdclient(validToken);
+			mvtService.updateDepot(idclient,date_mvt,valeur);			
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
 			throw e;
 		}
 		return header;
-	}	*/
+	}
 	
+	@PutMapping("/offreupdate/{nom_offre}")
+	public Header updateOffre(@PathVariable String nom_offre,@RequestBody Offre offre) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			offreService.update(nom_offre,offre);			
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}
+	
+	@PostMapping("/saveoffre")
+	public Header saveOffre(@RequestParam HashMap<String, Object> formData) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			String nomoffre = (String) formData.get("nom_offre");
+			double value = Double.parseDouble((String) formData.get("value"));
+			double duree_valide = Double.parseDouble((String) formData.get("duree_valide"));
+			int priorite =  Integer.valueOf((String) formData.get("priorite"));
+			
+			String nom_type_offre = (String) formData.get("nom_type_offre");
+			double value_ot = Double.parseDouble((String) formData.get("value_ot"));
+			offreService.saveOffre(nomoffre, value, duree_valide, priorite);
+			offreService.saveOffre_and_type(nom_type_offre, nomoffre, value_ot);
+			
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}	
 }
 
 

@@ -19,6 +19,7 @@ public class Helper {
              //"jiyomcuyrxqxyi", 
              //"05a8287e0385101cbce0ca05adfdc883707c85abd1058f6a683c93fa048df115");
             connexion = DriverManager.getConnection("jdbc:postgresql://postgresql-24249-0.cloudclusters.net:24249/FINDAY", "adminFinday", "12345678");
+            //connexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FINDAY", "adminFinday", "123456");
             connexion.setAutoCommit(false);
         } catch (SQLException e) {
             throw e;

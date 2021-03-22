@@ -3,6 +3,7 @@ package element;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,19 +64,41 @@ public class OffreDaoService {
 		return offreList;
 	}
 
-	public void saveOffre(HashMap<String, Object> formData) throws Exception {
-        PreparedStatement pst=null; 
-        String sql = "INSERT INTO OFFRE VALUES (NEXTVAL('Offre_sequence'),?)";
+	public void saveOffre_and_type(String nom_type_offre, String nom_offre, double valeur_ot) throws Exception {
+		PreparedStatement pst=null; 
+        String sql = "INSERT INTO offre_and_type VALUES (NEXTVAL('OffreAndType_Sequence'),?,?,?)";
         Connection conn = null;    
-        String nom_type_offre = formData.get("nom_type_offre").toString();
-        if(nom_type_offre.compareTo("") == 0) {
-        	throw new Exception("Nom type offre obligatoire");
-        }
         try {
         	conn = new Helper().getConnexionPsql();
-        	new Offre().controllerNomTypeOffre(nom_type_offre, conn);
+        	int id_offre =  new Offre().getIdOffreByName(nom_offre, conn);
+        	int id_type_offre =  new Offre().getIdTypeByName(nom_type_offre, conn);
         	pst=conn.prepareStatement(sql);
-            pst.setString(1, nom_type_offre);       
+            pst.setInt(1, id_offre);     
+            pst.setInt(2, id_type_offre);     
+            pst.setDouble(3, valeur_ot);     
+            System.out.println(pst);
+            pst.executeUpdate();    
+            conn.commit();
+        } catch(Exception ex) {
+        	conn.rollback();
+        	throw ex;
+        } finally {
+            if(pst!=null) pst.close();
+        }   		
+	}
+
+	public void saveOffre (String nom_offre, double value, double duree_valide, int priorite) throws Exception {
+        PreparedStatement pst=null; 
+        String sql = "INSERT INTO OFFRE VALUES (NEXTVAL('Offre_sequence'),?,?,?,?)";
+        Connection conn = null;    
+        try {
+        	conn = new Helper().getConnexionPsql();
+        	pst=conn.prepareStatement(sql);
+            pst.setString(1, nom_offre);
+            pst.setDouble(2, value);
+            pst.setDouble(3, duree_valide);
+            pst.setInt(4, priorite);
+            System.out.println(pst);
             pst.executeUpdate();    
             conn.commit();
         } catch(Exception ex) {
@@ -84,7 +107,33 @@ public class OffreDaoService {
         } finally {
             if(pst!=null) pst.close();
         }   
+	}		
+	
+	public void update(String nom_offre, Offre offre) throws Exception {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        String sql = "UPDATE offre SET value=?,duree_valide=?,priorite=? WHERE nom_offre = ?";
+        try{
+            conn = new Helper().getConnexionPsql();
+            //new Offre().controllerNomOffre(nom_offre, conn);
+            pst = conn.prepareStatement(sql);
+            pst.setDouble(1, offre.getValue());
+            pst.setInt(2, offre.getDuree_valide());
+            pst.setInt(3, offre.getPriorite());
+            pst.setString(4, nom_offre);
+        	System.out.println(pst);
+            pst.executeUpdate();
+        	conn.commit();
+        }catch(Exception e){
+        	conn.rollback();
+        	throw e;
+        }finally{
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }	
 	}
 	
-	//public void saveTypeOffre(HashMap<String, Object> formData) throws Exception {	
 }
