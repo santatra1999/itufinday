@@ -28,7 +28,7 @@ public class AppelDaoService {
 	        MongoCollection<Document> collection = database.getCollection("Appel");
 	        Document filter = new Document();
 	        filter.append("numSender", "+261324323454");
-	        filter.append("numRecep", "+261324323454");
+	        //filter.append("numRecep", "+261324323454");
 	        FindIterable<Document> iterDoc = collection.find(filter);
 	        cursor = iterDoc.cursor();
 	        res = new ArrayList<>();

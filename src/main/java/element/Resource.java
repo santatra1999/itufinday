@@ -31,6 +31,8 @@ public class Resource {
 	private MvtmobilemoneyDaoService mvtService;	
 	@Autowired
 	private AchatoffreDaoService achatOffreService;	
+	@Autowired
+	private StatistiqueDaoService statService;
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -200,14 +202,12 @@ public class Resource {
 		return header;		
 	}	
 	
-	@GetMapping("/depotvalide/{date_mvt}/{valeur}")
-	public Header saveTypeOffre(@PathVariable String date_mvt,@PathVariable double valeur,@RequestHeader("Authorization") String token) throws Exception {
+	@GetMapping("/depotvalide/{id_client}/{num}/{date_mvt}/{valeur}")
+	public Header saveTypeOffre(@PathVariable int id_client,@PathVariable String date_mvt,@PathVariable String num,@PathVariable double valeur) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			String validToken = token.split(" ")[1];
-			int idclient = clientService.getIdclient(validToken);
-			mvtService.updateDepot(idclient,date_mvt,valeur);			
+			mvtService.updateDepot(id_client,num,date_mvt,valeur);			
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
@@ -252,6 +252,67 @@ public class Resource {
 		}
 		return header;
 	}	
+
+	@GetMapping("/stat/chaffjour")
+	public Header getChaffjour() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			ArrayList<Statistique> chaffJour = statService.getChaffJour();
+			data = chaffJour;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}	
+
+	@GetMapping("/stat/frequsage")
+	public Header getFrequenceusage() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			ArrayList<Statistique> chaffJour = statService.getFrequenceUsage();
+			data = chaffJour;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}
+	
+	@GetMapping("/stat/totalchaff")
+	public Header getTotalChaff() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			double chaff = statService.getChiffreAffaire();
+			data = chaff;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}	
+	
+	@GetMapping("/stat/client")
+	public Header getCountClient() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			double chaff = statService.getCountClient();
+			data = chaff;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}		
+	
 }
 
 

@@ -3,6 +3,7 @@ package element;
 public class Mvtmobilemoney {
 	int id_client;
 	String nom;
+	String num;
 	int idmvt;
 	int id_mobile_money;
 	String typemvt;
@@ -53,11 +54,12 @@ public class Mvtmobilemoney {
 	public void setValidation(int validation) {
 		this.validation = validation;
 	}
-	public Mvtmobilemoney(int idclient,String nom,int idmvt, int id_mobile_money, String typemvt, double value, String date_mvt, double frais,
+	public Mvtmobilemoney(int idclient,String nom,String num,int idmvt, int id_mobile_money, String typemvt, double value, String date_mvt, double frais,
 			int validation) {
 		super();
 		this.setId_client(idclient);
 		this.setNom(nom);
+		this.setNum(num);
 		this.setIdmvt(idmvt);
 		this.setId_mobile_money(id_mobile_money);
 		this.setTypemvt(typemvt);
@@ -65,6 +67,12 @@ public class Mvtmobilemoney {
 		this.setDate_mvt(date_mvt);
 		this.setFrais(frais);
 		this.setValidation(validation);
+	}
+	public String getNum() {
+		return num;
+	}
+	public void setNum(String num) {
+		this.num = num;
 	}
 	public String getNom() {
 		return nom;

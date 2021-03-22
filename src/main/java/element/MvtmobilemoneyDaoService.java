@@ -23,7 +23,7 @@ public class MvtmobilemoneyDaoService {
         	pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while(rs.next()){
-            	mvtmobilemoneyList.add(new Mvtmobilemoney(rs.getInt("id_client"),rs.getString("nom"),rs.getInt("idmvt"), rs.getInt("id_mobile_money"), rs.getString("typemvt"), rs.getDouble("value"), rs.getString("date_mvt"),rs.getDouble("frais"), rs.getInt("validation")));
+            	mvtmobilemoneyList.add(new Mvtmobilemoney(rs.getInt("id_client"),rs.getString("nom"),rs.getString("num"),rs.getInt("idmvt"), rs.getInt("id_mobile_money"), rs.getString("typemvt"), rs.getDouble("value"), rs.getString("date_mvt"),rs.getDouble("frais"), rs.getInt("validation")));
             }
         }catch(Exception e){
             throw e;
@@ -35,17 +35,18 @@ public class MvtmobilemoneyDaoService {
 		return mvtmobilemoneyList;
 	}
 
-	public int getIdmvt(int idclient, String date_mvt, double valeur, Connection conn) throws Exception {
+	public int getIdmvt(int idclient, String date_mvt, double valeur, String num, Connection conn) throws Exception {
 		int idmvt = 0;
         PreparedStatement pst = null;
         ResultSet rs = null;
         
-        String sql = "SELECT idmvt FROM V_NON_VALIDATE_MVL where id_client=? AND date_mvt=?::timestamp AND value=? AND validation=0";
+        String sql = "SELECT idmvt FROM V_NON_VALIDATE_MVL where id_client=? AND date_mvt=?::timestamp AND value=? AND validation=0 AND num=?";
         try{
         	pst = conn.prepareStatement(sql);
             pst.setInt(1, idclient);
             pst.setString(2, date_mvt);
             pst.setDouble(3, valeur);
+            pst.setString(4, num);
         	System.out.println(pst);
             rs = pst.executeQuery();
             while(rs.next()){
@@ -60,7 +61,7 @@ public class MvtmobilemoneyDaoService {
 		return idmvt;
 	}
 
-	public void updateDepot(int idclient, String date_mvt, double valeur) throws Exception { 
+	public void updateDepot(int idclient, String num, String date_mvt, double valeur) throws Exception { 
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -68,7 +69,7 @@ public class MvtmobilemoneyDaoService {
         String sql = "UPDATE mvtmobilemoney SET validation = 1 WHERE idmvt = ?";
         try{
             conn = new Helper().getConnexionPsql();
-            int idmvt =  this.getIdmvt(idclient, date_mvt, valeur, conn);
+            int idmvt =  this.getIdmvt(idclient, date_mvt, valeur, num ,conn);
             if(idmvt == 0) {
             	throw new Exception("Idmvt erroné");
             }
