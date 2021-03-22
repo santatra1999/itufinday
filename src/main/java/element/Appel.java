@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Appel {
 	
-	int idappel;
+	String idappel;
 	
 	String numSender;
 	
@@ -16,10 +16,10 @@ public class Appel {
 	
 	String date;
 	
-	public int getIdappel() {
+	public String getIdappel() {
 		return idappel;
 	}
-	public void setIdappel(int idappel) {
+	public void setIdappel(String idappel) {
 		this.idappel = idappel;
 	}
 	public String getNumSender() {
@@ -46,7 +46,7 @@ public class Appel {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public Appel(int idappel, String numSender, String numRecep, double duree, String date) {
+	public Appel(String idappel, String numSender, String numRecep, double duree, String date) {
 		super();
 		this.setNumSender(numSender);
 		this.setNumRecep(numRecep);

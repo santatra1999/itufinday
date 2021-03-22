@@ -18,22 +18,23 @@ import utils.Helper;
 
 @Component
 public class AppelDaoService {
-    public List<Document> getHistoriqueAppel(String numClient) throws Exception {
-        MongoDatabase database = null;
+    public ArrayList<Appel> getHistoriqueAppel(String numClient) throws Exception {
+    	ArrayList<Appel> appelList = new ArrayList<Appel>();
+    	MongoDatabase database = null;
         MongoCursor<Document> cursor = null;
         List<Document> res = new ArrayList<>();
         
 	    try {
         	database = new Helper().getConnexionMongodb();
 	        MongoCollection<Document> collection = database.getCollection("Appel");
-	        Document filter = new Document();
-	        filter.append("numSender", "+261324323454");
-	        filter.append("numRecep", "+261324323454");
-	        FindIterable<Document> iterDoc = collection.find(filter);
+	        FindIterable<Document> iterDoc = collection.find(or(eq("numSender", numClient), eq("numRecep", numClient))).sort(new Document("date", +1));
 	        cursor = iterDoc.cursor();
 	        res = new ArrayList<>();
 	        while(cursor.hasNext()){
 	            res.add(cursor.next());
+	        }
+	        for(Document doc: res) {
+	        	appelList.add(new Appel(doc.getObjectId("_id").toString(), doc.getString("numSender"), doc.getString("numRecep"), doc.getDouble("duree"), doc.getDate("date").toString()));
 	        }
 	    } catch(Exception ex) {
 	    	throw ex;
@@ -41,6 +42,6 @@ public class AppelDaoService {
 	    	if(cursor!=null) cursor.close();
 	    }
 	    
-        return res;
+        return appelList;
     }
 }
