@@ -136,4 +136,25 @@ public class OffreDaoService {
         }	
 	}
 	
+	public void saveTypeOffre(String nom_type_offre) throws Exception {
+        PreparedStatement pst=null; 
+        
+        String sql = "INSERT INTO type_offre VALUES (NEXTVAL('TypeOffre_Sequence'),?)";
+        Connection conn = null;    
+        try {
+        	conn = new Helper().getConnexionPsql();
+        	pst=conn.prepareStatement(sql);
+        	new Offre().controllerNomTypeOffre(nom_type_offre, conn);
+        	pst.setString(1, nom_type_offre);
+            pst.executeUpdate();    
+            conn.commit();
+        } catch(Exception ex) {
+        	conn.rollback();
+        	throw ex;
+        } finally {
+            if(pst!=null) pst.close();
+            if(conn!=null) conn.close();
+        }   		
+	}
+	
 }

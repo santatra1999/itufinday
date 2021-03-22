@@ -33,6 +33,8 @@ public class Resource {
 	private AchatoffreDaoService achatOffreService;	
 	@Autowired
 	private StatistiqueDaoService statService;
+	@Autowired
+	private TypeOffreDaoService typeService;
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -253,6 +255,21 @@ public class Resource {
 		return header;
 	}	
 
+	@PostMapping("/savetypeoffre")
+	public Header saveTypeOffre(@RequestParam HashMap<String, Object> formData) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {	
+			String nomtypeoffre = (String) formData.get("nom_type_offre");
+			offreService.saveTypeOffre(nomtypeoffre);		
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}				
+	
 	@GetMapping("/stat/chaffjour")
 	public Header getChaffjour() throws Exception {
 		Header header = new Header();
@@ -312,7 +329,22 @@ public class Resource {
 		}
 		return header;		
 	}		
+
 	
+	@GetMapping("/typeoffre")
+	public Header getTypeOffre() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			ArrayList<TypeOffre> to = typeService.getTypeOffre();
+			data = to;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}	
 }
 
 
