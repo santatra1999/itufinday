@@ -29,8 +29,9 @@ public class Helper {
     }
 
     public MongoDatabase getConnexionMongodb() throws Exception {
-        String url = "mongodb://localhost:27017/?readPreference=primary&ssl=false";
-        MongoClient mongo = null;
+        //String url = "mongodb://localhost:27017/?readPreference=primary&ssl=false";
+    	String url = "mongodb+srv://MOBILE:arminvanbuuren1999!@cluster0.i7ye3.mongodb.net/MOBILE";
+    	MongoClient mongo = null;
         MongoDatabase database = null;
         try {
         	mongo = MongoClients.create(url);
