@@ -17,7 +17,22 @@ public class Offre {
 	int usage;
 	double chaff;
 	double valeur_ot;
+	String nom_type_offre;
 	
+	public String getNom_type_offre() {
+		return nom_type_offre;
+	}
+	public void setNom_type_offre(String nom_type_offre) {
+		this.nom_type_offre = nom_type_offre;
+	}
+	public Offre(String nom_offre, String nom_type_offre, double value, int duree_valide, double valeur_ot) throws Exception {
+		super();
+		this.setNom_offre(nom_offre);
+		this.setValue(value);
+		this.setDuree_valide(duree_valide);
+		this.setValeur_ot(valeur_ot);
+		this.setNom_type_offre(nom_type_offre);
+	}
 	public double getValeur_ot() {
 		return valeur_ot;
 	}

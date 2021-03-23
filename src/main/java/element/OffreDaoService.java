@@ -156,5 +156,29 @@ public class OffreDaoService {
             if(conn!=null) conn.close();
         }   		
 	}
+
+	public ArrayList<Offre> getDetailsOffre() throws Exception {
+		ArrayList<Offre> offreList= new ArrayList<>();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        String sql = "SELECT * FROM V_DETAIL_OFFRE";
+        try{
+            conn = new Helper().getConnexionPsql();
+        	pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()){
+            	offreList.add(new Offre(rs.getString("NOM_OFFRE"), rs.getString("NOM_TYPE_OFFRE"), rs.getDouble("value"),rs.getInt("DUREE_VALIDE"), rs.getDouble("VALEUR")));
+            }
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }				
+		return offreList;
+	}	
 	
 }
