@@ -235,7 +235,7 @@ public class Resource {
 	}
 	
 	@PostMapping("/saveoffre")
-	public Header saveOffre(@RequestParam HashMap<String, Object> formData) throws Exception {
+	public Header saveOffreC(@RequestParam HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
@@ -255,7 +255,7 @@ public class Resource {
 	}	
 
 	@PostMapping("/saveoffreandtype")
-	public Header saveOffreAndType(@RequestParam HashMap<String, Object> formData) throws Exception {
+	public Header saveOffreAndTypeC(@RequestParam HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
@@ -275,7 +275,7 @@ public class Resource {
 	
 	
 	@PostMapping("/savetypeoffre")
-	public Header saveTypeOffre(@RequestParam HashMap<String, Object> formData) throws Exception {
+	public Header saveTypeOffreC(@RequestParam HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {	
