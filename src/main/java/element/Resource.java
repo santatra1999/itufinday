@@ -266,15 +266,12 @@ public class Resource {
 		return header;
 	}
 	@PostMapping("/saveoffreandtype")
-	public Header saveOffreAndTypeC(@RequestParam HashMap<String, Object> formData) throws Exception {
+	public Header saveOffreAndTypeC(@RequestBody Offre formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			String nomoffre = (String) formData.get("nom_offre");
-			String nom_type_offre = (String) formData.get("nom_type_offre");
-			double value_ot = Double.parseDouble((String) formData.get("value_ot"));
 			
-			offreService.saveOffre_and_type(nom_type_offre, nomoffre, value_ot);
+			offreService.saveOffre_and_type(formData);
 			
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
@@ -286,12 +283,11 @@ public class Resource {
 	
 	
 	@PostMapping("/savetypeoffre")
-	public Header saveTypeOffreC(@RequestParam HashMap<String, Object> formData) throws Exception {
+	public Header saveTypeOffreC(@RequestBody Offre offre) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {	
-			String nomtypeoffre = (String) formData.get("nom_type_offre");
-			offreService.saveTypeOffre(nomtypeoffre);		
+			offreService.saveTypeOffre(offre.getNom_type_offre());		
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
@@ -391,7 +387,22 @@ public class Resource {
 			throw e;
 		}
 		return header;		
-	}		
+	}	
+	
+	@GetMapping("/detailoffre")
+	public Header getDetailOffre() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			ArrayList<Offre> log = offreService.getDetailsOffre();	
+			data = log;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}	
 }
 
 

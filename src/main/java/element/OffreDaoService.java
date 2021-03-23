@@ -64,18 +64,18 @@ public class OffreDaoService {
 		return offreList;
 	}
 
-	public void saveOffre_and_type(String nom_type_offre, String nom_offre, double valeur_ot) throws Exception {
+	public void saveOffre_and_type(Offre offre) throws Exception {
 		PreparedStatement pst=null; 
         String sql = "INSERT INTO offre_and_type VALUES (NEXTVAL('OffreAndType_Sequence'),?,?,?)";
         Connection conn = null;    
         try {
         	conn = new Helper().getConnexionPsql();
-        	int id_offre =  new Offre().getIdOffreByName(nom_offre, conn);
-        	int id_type_offre =  new Offre().getIdTypeByName(nom_type_offre, conn);
+        	int id_offre =  new Offre().getIdOffreByName(offre.getNom_offre(), conn);
+        	int id_type_offre =  new Offre().getIdTypeByName(offre.getNom_type_offre(), conn);
         	pst=conn.prepareStatement(sql);
             pst.setInt(1, id_offre);     
             pst.setInt(2, id_type_offre);     
-            pst.setDouble(3, valeur_ot);     
+            pst.setDouble(3, offre.getValeur_ot());     
             System.out.println(pst);
             pst.executeUpdate();    
             conn.commit();

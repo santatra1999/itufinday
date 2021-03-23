@@ -118,6 +118,10 @@ public class Offre {
 		this.setPriorite(priorite);
 		this.setValeur_ot(valeur_ot);
 	}	
+	public Offre(String nom_type_offre) {
+		super();
+		this.setNom_type_offre(nom_type_offre);
+	}
 	public void controllerNomTypeOffre(String nom_type_offre, Connection conn) throws Exception {
         PreparedStatement pst = null;
         ResultSet rs = null;
