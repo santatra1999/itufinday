@@ -37,6 +37,8 @@ public class Resource {
 	private TypeOffreDaoService typeService;
 	@Autowired
 	private AppelDaoService appelService;
+	@Autowired
+	private Offre_and_typeDaoService offreTypelService;
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -207,7 +209,7 @@ public class Resource {
 	}	
 	
 	@GetMapping("/depotvalide/{idmvt}")
-	public Header saveTypeOffre(@PathVariable int idmvt) throws Exception {
+	public Header validationDepot(@PathVariable int idmvt) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
@@ -253,11 +255,11 @@ public class Resource {
 	}	*/
 	
 	@PostMapping("/saveoffre")
-	public Header saveOffreC(@RequestBody Offre offre) throws Exception {
+	public Header saveOffreC(@RequestBody Offre_and_type offre) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			offreService.saveOffre(offre);
+			offreTypelService.saveOffre_and_type(offre);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
@@ -265,14 +267,13 @@ public class Resource {
 		}
 		return header;
 	}
+	
 	@PostMapping("/saveoffreandtype")
-	public Header saveOffreAndTypeC(@RequestBody Offre formData) throws Exception {
+	public Header saveOffreAndTypeC(@RequestBody Offre_and_type formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			
-			offreService.saveOffre_and_type(formData);
-			
+			offreTypelService.saveOffre_and_type(formData);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
@@ -280,8 +281,7 @@ public class Resource {
 		}
 		return header;
 	}	
-	
-	
+		
 	@PostMapping("/savetypeoffre")
 	public Header saveTypeOffreC(@RequestBody Offre offre) throws Exception {
 		Header header = new Header();

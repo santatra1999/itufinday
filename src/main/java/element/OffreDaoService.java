@@ -191,7 +191,7 @@ public class OffreDaoService {
         	pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while(rs.next()){
-            	offreList.add(new Offre(rs.getString("NOM_OFFRE"), rs.getString("NOM_TYPE_OFFRE"), rs.getDouble("value"),rs.getInt("DUREE_VALIDE"), rs.getDouble("VALEUR")));
+            	offreList.add(new Offre(rs.getString("NOM_OFFRE"), rs.getString("NOM_TYPE_OFFRE"), rs.getDouble("value"),rs.getInt("DUREE_VALIDE"), rs.getDouble("VALEUR"), rs.getString("Appel")));
             }
         }catch(Exception e){
             throw e;

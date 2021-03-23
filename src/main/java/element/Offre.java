@@ -18,20 +18,28 @@ public class Offre {
 	double chaff;
 	double valeur_ot;
 	String nom_type_offre;
+	String appel;
 	
+	public String getAppel() {
+		return appel;
+	}
+	public void setAppel(String appel) {
+		this.appel = appel;
+	}
 	public String getNom_type_offre() {
 		return nom_type_offre;
 	}
 	public void setNom_type_offre(String nom_type_offre) {
 		this.nom_type_offre = nom_type_offre;
 	}
-	public Offre(String nom_offre, String nom_type_offre, double value, int duree_valide, double valeur_ot) throws Exception {
+	public Offre(String nom_offre, String nom_type_offre, double value, int duree_valide, double valeur_ot, String appel) throws Exception {
 		super();
 		this.setNom_offre(nom_offre);
 		this.setValue(value);
 		this.setDuree_valide(duree_valide);
 		this.setValeur_ot(valeur_ot);
 		this.setNom_type_offre(nom_type_offre);
+		this.setAppel(appel);
 	}
 	public double getValeur_ot() {
 		return valeur_ot;
@@ -122,6 +130,7 @@ public class Offre {
 		super();
 		this.setNom_type_offre(nom_type_offre);
 	}
+	
 	public void controllerNomTypeOffre(String nom_type_offre, Connection conn) throws Exception {
         PreparedStatement pst = null;
         ResultSet rs = null;
