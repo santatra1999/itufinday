@@ -35,6 +35,8 @@ public class Resource {
 	private StatistiqueDaoService statService;
 	@Autowired
 	private TypeOffreDaoService typeService;
+	@Autowired
+	private AppelDaoService appelService;
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -241,11 +243,8 @@ public class Resource {
 			double value = Double.parseDouble((String) formData.get("value"));
 			double duree_valide = Double.parseDouble((String) formData.get("duree_valide"));
 			int priorite =  Integer.valueOf((String) formData.get("priorite"));
-			
-			String nom_type_offre = (String) formData.get("nom_type_offre");
-			double value_ot = Double.parseDouble((String) formData.get("value_ot"));
 			offreService.saveOffre(nomoffre, value, duree_valide, priorite);
-			offreService.saveOffre_and_type(nom_type_offre, nomoffre, value_ot);
+			//offreService.saveOffre_and_type(nom_type_offre, nomoffre, value_ot);
 			
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
@@ -255,6 +254,26 @@ public class Resource {
 		return header;
 	}	
 
+	@PostMapping("/saveoffreandtype")
+	public Header saveOffreAndType(@RequestParam HashMap<String, Object> formData) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			String nomoffre = (String) formData.get("nom_offre");
+			String nom_type_offre = (String) formData.get("nom_type_offre");
+			double value_ot = Double.parseDouble((String) formData.get("value_ot"));
+			
+			offreService.saveOffre_and_type(nom_type_offre, nomoffre, value_ot);
+			
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}	
+	
+	
 	@PostMapping("/savetypeoffre")
 	public Header saveTypeOffre(@RequestParam HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
@@ -344,7 +363,24 @@ public class Resource {
 			throw e;
 		}
 		return header;		
-	}	
+	}
+	
+	@GetMapping("/historique")
+	public Header getHistorique(@RequestHeader("Authorization") String token) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			String validToken = token.split(" ")[1];
+			int idclient = clientService.getIdclient(validToken);
+			ArrayList<Appel> log = appelService.getHistoriqueAppel(idclient);		
+			data = log;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}		
 }
 
 

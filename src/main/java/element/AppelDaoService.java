@@ -1,5 +1,6 @@
 package element;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import static com.mongodb.client.model.Filters.*;
 import java.util.List;
@@ -18,19 +19,21 @@ import utils.Helper;
 
 @Component
 public class AppelDaoService {
-    public ArrayList<Appel> getHistoriqueAppel(String numClient) throws Exception {
+    public ArrayList<Appel> getHistoriqueAppel(int idclient) throws Exception {
     	ArrayList<Appel> appelList = new ArrayList<Appel>();
     	MongoDatabase database = null;
         MongoCursor<Document> cursor = null;
         List<Document> res = new ArrayList<>();
-        
+        Connection conn = null;
 	    try {
-        	database = new Helper().getConnexionMongodb();
+        	conn = new Helper().getConnexionPsql();
+	    	database = new Helper().getConnexionMongodb();
 	        MongoCollection<Document> collection = database.getCollection("Appel");
+	        String numClient = new ClientDaoService().getClientnumById(idclient, conn);
 	        FindIterable<Document> iterDoc = collection.find(or(eq("numSender", numClient), eq("numRecep", numClient))).sort(new Document("date", +1));
 	        cursor = iterDoc.cursor();
 	        res = new ArrayList<>();
-	        while(cursor.hasNext()){
+	        while(cursor.hasNext()) {
 	            res.add(cursor.next());
 	        }
 	        for(Document doc: res) {
@@ -40,6 +43,7 @@ public class AppelDaoService {
 	    	throw ex;
 	    } finally {
 	    	if(cursor!=null) cursor.close();
+	    	if(conn!=null) conn.close();
 	    }
 	    
         return appelList;

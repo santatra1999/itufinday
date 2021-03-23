@@ -21,7 +21,7 @@ public class Test {
 		//new Client().setDatenaiss("1999-11-01");
 		// new Clientnum().setNum("+1511");
 		// new ().getCreditClient(1);
-		ArrayList<Appel> appel = new AppelDaoService().getHistoriqueAppel("+261324323454");
+		ArrayList<Appel> appel = new AppelDaoService().getHistoriqueAppel(2);
 		for(Appel app: appel) {
 			System.out.println(app.getNumRecep());
 		}

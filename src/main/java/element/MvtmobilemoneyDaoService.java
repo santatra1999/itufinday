@@ -82,4 +82,26 @@ public class MvtmobilemoneyDaoService {
             if(conn!=null)conn.close();
         }	
 	}
+	
+/*	public void save() {
+       PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        String sql = "INSERT INTO mvtmobilemoney ";
+        try{
+            conn = new Helper().getConnexionPsql();
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, idmvt);
+        	pst.executeUpdate();
+        	conn.commit();
+        }catch(Exception e){
+        	conn.rollback();
+        	throw e;
+        }finally{
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }			
+	}*/
 }
