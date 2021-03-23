@@ -38,7 +38,7 @@ public class Resource {
 	@Autowired
 	private AppelDaoService appelService;
 	@Autowired
-	private Offre_and_typeDaoService offreTypelService;
+	private Offre_and_typeDaoService offreTypeService;
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -236,7 +236,7 @@ public class Resource {
 		return header;
 	}
 	
-/*	@PostMapping("/saveoffre")
+	@PostMapping("/saveoffre")
 	public Header saveOffreC(@RequestBody HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
@@ -252,28 +252,28 @@ public class Resource {
 			throw e;
 		}
 		return header;
-	}	*/
+	}	
 	
-	@PostMapping("/saveoffre")
+	/*@PostMapping("/saveoffre")
 	public Header saveOffreC(@RequestBody Offre_and_type offre) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			offreTypelService.saveOffre_and_type(offre);
+			offreTypeService.saveOffre_and_type(offre);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
 			throw e;
 		}
 		return header;
-	}
+	}*/
 	
 	@PostMapping("/saveoffreandtype")
 	public Header saveOffreAndTypeC(@RequestBody Offre_and_type formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			offreTypelService.saveOffre_and_type(formData);
+			offreTypeService.saveOffre_and_type(formData);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);

@@ -21,10 +21,8 @@ public class Offre_and_typeDaoService {
         	pst=conn.prepareStatement(sql);
             pst.setInt(1, id_offre);     
             pst.setInt(2, id_type_offre);  
-            System.out.println(offre.getValeur());
             pst.setDouble(3, offre.getValeur());     
-            System.out.println(pst);
-            //pst.executeUpdate();    
+            System.out.println(pst);  
             conn.commit();
         } catch(Exception ex) {
         	conn.rollback();

@@ -32,16 +32,6 @@ public class Offre_and_type {
 	public void setValeur(double valeur) {
 		this.valeur = valeur;
 	}
-	public Offre_and_type(int id_offre_and_type, int id_offre, int id_type_offre, double valeur, String nom_offre,
-			String nom_type_offre) {
-		super();
-		this.setId_offre_and_type(id_offre_and_type);
-		this.setId_offre(id_offre);
-		this.setId_type_offre(id_type_offre);
-		this.setValeur(valeur);
-		this.setNom_offre(nom_offre);
-		this.setNom_type_offre(nom_type_offre);
-	}
 	public String getNom_offre() {
 		return nom_offre;
 	}
@@ -53,6 +43,16 @@ public class Offre_and_type {
 	}
 	public void setNom_type_offre(String nom_type_offre) {
 		this.nom_type_offre = nom_type_offre;
+	}	
+	public Offre_and_type(int id_offre_and_type, int id_offre, int id_type_offre, double valeur, String nom_offre,
+			String nom_type_offre) {
+		super();
+		this.setId_offre_and_type(id_offre_and_type);
+		this.setId_offre(id_offre);
+		this.setId_type_offre(id_type_offre);
+		this.setValeur(valeur);
+		this.setNom_offre(nom_offre);
+		this.setNom_type_offre(nom_type_offre);
 	}
 	public Offre_and_type(int id_offre, int id_type_offre, double valeur) {
 		super();
