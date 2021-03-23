@@ -235,7 +235,7 @@ public class Resource {
 	}
 	
 	@PostMapping("/saveoffre")
-	public Header saveOffreC(@RequestParam HashMap<String, Object> formData) throws Exception {
+	public Header saveOffreC(@RequestBody HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
