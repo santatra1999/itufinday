@@ -64,7 +64,7 @@ public class Offre {
 		return nom_offre;
 	}
 	public void setNom_offre(String nom_offre) throws Exception {
-		if(nom_offre.compareTo("" ) == 0) {
+		if(nom_offre.compareTo("") == 0) {
 			throw new Exception("Nom offre obligatoire");
 		}
 		this.nom_offre = nom_offre;

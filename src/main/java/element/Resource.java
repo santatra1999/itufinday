@@ -234,7 +234,7 @@ public class Resource {
 		return header;
 	}
 	
-	@PostMapping("/saveoffre")
+/*	@PostMapping("/saveoffre")
 	public Header saveOffreC(@RequestBody HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
@@ -244,16 +244,27 @@ public class Resource {
 			double duree_valide = Double.parseDouble((String) formData.get("duree_valide"));
 			int priorite =  Integer.valueOf((String) formData.get("priorite"));
 			offreService.saveOffre(nomoffre, value, duree_valide, priorite);
-			//offreService.saveOffre_and_type(nom_type_offre, nomoffre, value_ot);
-			
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
 			throw e;
 		}
 		return header;
-	}	
-
+	}	*/
+	
+	@PostMapping("/saveoffre")
+	public Header saveOffreC(@RequestBody Offre offre) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			offreService.saveOffre(offre);
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}
 	@PostMapping("/saveoffreandtype")
 	public Header saveOffreAndTypeC(@RequestParam HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();

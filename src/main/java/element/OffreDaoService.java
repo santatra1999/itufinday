@@ -109,6 +109,28 @@ public class OffreDaoService {
         }   
 	}		
 	
+	public void saveOffre (Offre offre) throws Exception {
+        PreparedStatement pst=null; 
+        String sql = "INSERT INTO OFFRE VALUES (NEXTVAL('Offre_sequence'),?,?,?,?)";
+        Connection conn = null;    
+        try {
+        	conn = new Helper().getConnexionPsql();
+        	pst=conn.prepareStatement(sql);
+            pst.setString(1, offre.getNom_offre());
+            pst.setDouble(2, offre.getValue());
+            pst.setDouble(3, offre.getDuree_valide());
+            pst.setInt(4, offre.getPriorite());
+            System.out.println(pst);
+            pst.executeUpdate();    
+            conn.commit();
+        } catch(Exception ex) {
+        	conn.rollback();
+        	throw ex;
+        } finally {
+            if(pst!=null) pst.close();
+        }   
+	}		
+	
 	public void update(String nom_offre, Offre offre) throws Exception {
         PreparedStatement pst = null;
         ResultSet rs = null;
