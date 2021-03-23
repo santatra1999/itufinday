@@ -204,12 +204,12 @@ public class Resource {
 		return header;		
 	}	
 	
-	@GetMapping("/depotvalide/{id_client}/{num}/{date_mvt}/{valeur}")
-	public Header saveTypeOffre(@PathVariable int id_client,@PathVariable String date_mvt,@PathVariable String num,@PathVariable double valeur) throws Exception {
+	@GetMapping("/depotvalide/{idmvt}")
+	public Header saveTypeOffre(@PathVariable int idmvt) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			mvtService.updateDepot(id_client,num,date_mvt,valeur);			
+			mvtService.updateDepot(idmvt);			
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);

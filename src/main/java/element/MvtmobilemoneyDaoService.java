@@ -61,7 +61,7 @@ public class MvtmobilemoneyDaoService {
 		return idmvt;
 	}
 
-	public void updateDepot(int idclient, String num, String date_mvt, double valeur) throws Exception { 
+	public void updateDepot(int idmvt) throws Exception { 
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -69,10 +69,6 @@ public class MvtmobilemoneyDaoService {
         String sql = "UPDATE mvtmobilemoney SET validation = 1 WHERE idmvt = ?";
         try{
             conn = new Helper().getConnexionPsql();
-            int idmvt =  this.getIdmvt(idclient, date_mvt, valeur, num ,conn);
-            if(idmvt == 0) {
-            	throw new Exception("Idmvt erroné");
-            }
             pst = conn.prepareStatement(sql);
             pst.setInt(1, idmvt);
         	pst.executeUpdate();
