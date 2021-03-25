@@ -3,12 +3,7 @@ package element;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 import org.springframework.stereotype.Component;
 
@@ -84,6 +79,7 @@ public class OffreDaoService {
         	throw ex;
         } finally {
             if(pst!=null) pst.close();
+            if(conn!=null) conn.close();
         }   		
 	}
 
@@ -191,7 +187,7 @@ public class OffreDaoService {
         	pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while(rs.next()){
-            	offreList.add(new Offre(rs.getString("NOM_OFFRE"), rs.getString("NOM_TYPE_OFFRE"), rs.getDouble("value"),rs.getInt("DUREE_VALIDE"), rs.getDouble("VALEUR"), rs.getString("Appel")));
+            	offreList.add(new Offre(rs.getInt("id_offre"),rs.getInt("id_offre_and_type"),rs.getString("NOM_OFFRE"), rs.getString("NOM_TYPE_OFFRE"), rs.getDouble("value"),rs.getInt("DUREE_VALIDE"), rs.getDouble("VALEUR"), rs.getString("Appel"), rs.getInt("priorite")));
             }
         }catch(Exception e){
             throw e;

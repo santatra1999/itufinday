@@ -1,17 +1,8 @@
 package utils;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.Document;
-
 import element.Appel;
 import element.AppelDaoService;
-import element.Client;
-import element.Clientnum;
 
 public class Test {
 
