@@ -134,15 +134,16 @@ public class OffreDaoService {
         ResultSet rs = null;
         Connection conn = null;
         
-        String sql = "UPDATE offre SET value=?,duree_valide=?,priorite=? WHERE nom_offre = ?";
+        String sql = "UPDATE offre SET value=?,SET nom_offre=?,duree_valide=?,priorite=? WHERE nom_offre = ?";
         try{
             conn = new Helper().getConnexionPsql();
             //new Offre().controllerNomOffre(nom_offre, conn);
             pst = conn.prepareStatement(sql);
             pst.setDouble(1, offre.getValue());
-            pst.setInt(2, offre.getDuree_valide());
-            pst.setInt(3, offre.getPriorite());
-            pst.setString(4, nom_offre);
+            pst.setString(2, offre.getNom_offre());
+            pst.setInt(3, offre.getDuree_valide());
+            pst.setInt(4, offre.getPriorite());
+            pst.setString(5, nom_offre);
         	System.out.println(pst);
             pst.executeUpdate();
         	conn.commit();
@@ -201,4 +202,30 @@ public class OffreDaoService {
 		return offreList;
 	}	
 	
+	public void updateOffre_and_type(String nom_type_offre, Offre offre) throws Exception {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        String sql = "UPDATE offre SET value=?,duree_valide=?,priorite=? WHERE nom_offre = ?";
+        try{
+            conn = new Helper().getConnexionPsql();
+            //new Offre().controllerNomOffre(nom_offre, conn);
+            pst = conn.prepareStatement(sql);
+            pst.setDouble(1, offre.getValue());
+            pst.setInt(2, offre.getDuree_valide());
+            pst.setInt(3, offre.getPriorite());
+            pst.setString(4, nom_offre);
+        	System.out.println(pst);
+            pst.executeUpdate();
+        	conn.commit();
+        }catch(Exception e){
+        	conn.rollback();
+        	throw e;
+        }finally{
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }	
+	}	
 }
