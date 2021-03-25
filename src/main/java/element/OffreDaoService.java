@@ -134,7 +134,7 @@ public class OffreDaoService {
         ResultSet rs = null;
         Connection conn = null;
         
-        String sql = "UPDATE offre SET value=?,SET nom_offre=?,duree_valide=?,priorite=? WHERE nom_offre = ?";
+        String sql = "UPDATE offre SET value=?,nom_offre=?,duree_valide=?,priorite=? WHERE nom_offre = ?";
         try{
             conn = new Helper().getConnexionPsql();
             //new Offre().controllerNomOffre(nom_offre, conn);
