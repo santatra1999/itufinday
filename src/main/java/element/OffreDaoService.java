@@ -89,11 +89,12 @@ public class OffreDaoService {
         Connection conn = null;    
         try {
         	conn = new Helper().getConnexionPsql();
+        	new Offre().controllerNomOffre(nom_offre, conn);
         	pst=conn.prepareStatement(sql);
             pst.setString(1, nom_offre);
             pst.setDouble(2, value);
             pst.setDouble(3, duree_valide);
-            pst.setInt(4, priorite);
+            pst.setInt(4, priorite);  
             System.out.println(pst);
             pst.executeUpdate();    
             conn.commit();
@@ -116,6 +117,7 @@ public class OffreDaoService {
             pst.setDouble(2, offre.getValue());
             pst.setDouble(3, offre.getDuree_valide());
             pst.setInt(4, offre.getPriorite());
+            new Offre().controllerNomOffre(offre.getNom_offre(), conn);
             System.out.println(pst);
             pst.executeUpdate();    
             conn.commit();

@@ -44,6 +44,4 @@ public class Header {
 		this.message = message;
 		this.data = data;
 	}
-	
-	
 }
