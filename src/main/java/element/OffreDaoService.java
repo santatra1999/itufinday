@@ -202,7 +202,7 @@ public class OffreDaoService {
 		return offreList;
 	}	
 	
-	public void updateOffre_and_type(String nom_type_offre, Offre offre) throws Exception {
+	/*public void updateOffre_and_type(String nom_type_offre, Offre offre) throws Exception {
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -227,5 +227,5 @@ public class OffreDaoService {
             if(rs!=null)rs.close();
             if(conn!=null)conn.close();
         }	
-	}	
+	}	*/
 }
