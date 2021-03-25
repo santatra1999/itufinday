@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -220,20 +221,6 @@ public class Resource {
 		return header;
 	}
 	
-	@PutMapping("/offreupdate/{nom_offre}")
-	public Header updateOffre(@PathVariable String nom_offre,@RequestBody Offre offre) throws Exception {
-		Header header = new Header();
-		Object data = null;
-		try {
-			offreService.update(nom_offre,offre);			
-			header = new Header(200,"Ok",data);
-		} catch (Exception e) {
-			header = new Header(400,e.getMessage(),data);
-			throw e;
-		}
-		return header;
-	}
-	
 	@PostMapping("/saveoffre")
 	public Header saveOffreC(@RequestBody HashMap<String, Object> formData) throws Exception {
 		Header header = new Header();
@@ -394,6 +381,49 @@ public class Resource {
 		try {
 			ArrayList<Offre> log = offreService.getDetailsOffre();	
 			data = log;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}	
+
+	@PutMapping("/offreupdate/{nom_offre}")
+	public Header updateOffre(@PathVariable String nom_offre,@RequestBody Offre offre) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			offreService.update(nom_offre,offre);			
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}	
+	
+	@PutMapping("/updateoffreandtype/{id_offre_and_type}")
+	public Header update(@PathVariable int id_offre_and_type, @RequestBody Offre_and_type offre) throws Exception{
+		Header header = new Header();
+		Object data = null;
+		try {
+			System.out.println(offre.getValeur());
+			offreTypeService.update(id_offre_and_type, offre);			
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}
+	
+	@GetMapping("/deleteoffreandtype/{id_offre_and_type}")
+	public Header deleteOffraAndType(@PathVariable int id_offre_and_type) throws Exception{
+		Header header = new Header();
+		Object data = null;
+		try {
+			offreTypeService.delete(id_offre_and_type);			
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);

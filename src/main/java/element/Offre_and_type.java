@@ -66,4 +66,11 @@ public class Offre_and_type {
 		this.setNom_type_offre(nom_type_offre);
 		this.setValeur(valeur);
 	}	
+	public Offre_and_type(double valeur) {
+		super();
+		this.setValeur(valeur);
+	}
+	public Offre_and_type() {
+		super();
+	}	
 }
