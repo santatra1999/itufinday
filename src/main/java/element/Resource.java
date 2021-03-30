@@ -65,11 +65,11 @@ public class Resource {
 	}	
 	
 	@PostMapping("/client")
-	public Header inscription(@RequestParam HashMap<String, Object> formData) throws Exception {
+	public Header inscription(@RequestBody Client formData) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			Client savedUser = new Client(formData);
+			Client savedUser = new Client(formData.getNom(), formData.getDatenaiss(), formData.getMdp(), formData.getIdentif(), formData.getNum());
 			clientService.saveClient(savedUser);
 			data = savedUser;
 			header = new Header(200,"Ok",data);
