@@ -25,7 +25,8 @@ public class AppelDaoService {
         Connection conn = null;
 	    try {
         	conn = new Helper().getConnexionPsql();
-	    	database = new Helper().getConnexionMongodb();
+        	new Token().deleteToken(conn);
+        	database = new Helper().getConnexionMongodb();
 	        MongoCollection<Document> collection = database.getCollection("Appel");
 	        String numClient = new ClientDaoService().getClientnumById(idclient, conn);
 	        FindIterable<Document> iterDoc = collection.find(or(eq("numSender", numClient), eq("numRecep", numClient))).sort(new Document("date", +1));

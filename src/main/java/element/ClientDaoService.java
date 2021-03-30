@@ -126,19 +126,19 @@ public class ClientDaoService extends Client {
         }		
 	}
 	
-	public ArrayList<Client> getChiffreAffaire() throws Exception {
+	public ArrayList<Client> getChiffreAffaireClient() throws Exception {
 		ArrayList<Client> listClient = new ArrayList<>();
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
         
-        String sql = "SELECT * FROM V_CLIENT_CHFAFF";
+        String sql = "SELECT IDENTIF,NUM,SUM(CHaFF) AS CHaFF FROM V_CLIENT_CHFAFF GROUP BY IDENTIF,NUM";
         try{
             conn = new Helper().getConnexionPsql();
         	pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while(rs.next()){
-            	listClient.add(new Client(rs.getString("identif"), rs.getString("num"), rs.getDouble("chaff")));
+            	listClient.add(new Client(rs.getString("IDENTIF"), rs.getString("NUM"), rs.getDouble("CHaFF")));
             }
         }catch(Exception e){
             throw e;
@@ -180,6 +180,7 @@ public class ClientDaoService extends Client {
         
         try{
         	conn = new Helper().getConnexionPsql();
+        	new Token().deleteToken(conn);
         	String numero = this.getClientnumById(idclient, conn);
         	String sql = "SELECT (COALESCE((SELECT SUM(VALUE) FROM ENTREE_CREDIT WHERE num LIKE '%"+numero+"%'),0))-((COALESCE((SELECT SUM(VALEUR) FROM SORTIE_CREDIT_APPEL WHERE num LIKE '%"+numero+"%'),0))+(COALESCE((SELECT SUM(VALUE) FROM SORTIE_CREDIT_OFFRE WHERE num LIKE '%"+numero+"%'),0))) AS CREDIT";        	
         	pst = conn.prepareStatement(sql);        	
@@ -263,7 +264,8 @@ public class ClientDaoService extends Client {
         		+ "	WHERE clientnum.id_client=?";
         try{
         	conn = new Helper().getConnexionPsql();
-            pst = conn.prepareStatement(sql);
+        	new Token().deleteToken(conn);
+        	pst = conn.prepareStatement(sql);
             pst.setInt(1, idclient);
             rs = pst.executeQuery();
             while(rs.next()){

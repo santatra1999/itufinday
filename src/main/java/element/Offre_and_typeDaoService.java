@@ -23,6 +23,7 @@ public class Offre_and_typeDaoService {
             pst.setInt(2, id_type_offre);  
             pst.setDouble(3, offre.getValeur());     
             System.out.println(pst);  
+            pst.executeUpdate();
             conn.commit();
         } catch(Exception ex) {
         	conn.rollback();

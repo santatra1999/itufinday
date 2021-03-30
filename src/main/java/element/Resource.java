@@ -85,7 +85,7 @@ public class Resource {
 		Header header = new Header();
 		Object data = null;
 		try {
-			ArrayList<Client> clientList = clientService.getChiffreAffaire();
+			ArrayList<Client> clientList = clientService.getChiffreAffaireClient();
 			data = clientList;
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
@@ -222,15 +222,11 @@ public class Resource {
 	}
 	
 	@PostMapping("/saveoffre")
-	public Header saveOffreC(@RequestBody HashMap<String, Object> formData) throws Exception {
+	public Header saveOffreC(@RequestBody Offre offre) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			String nomoffre = (String) formData.get("nom_offre");
-			double value = Double.parseDouble((String) formData.get("value"));
-			double duree_valide = Double.parseDouble((String) formData.get("duree_valide"));
-			int priorite =  Integer.valueOf((String) formData.get("priorite"));
-			offreService.saveOffre(nomoffre, value, duree_valide, priorite);
+			offreService.saveOffre(offre.getNom_offre(), offre.getValue(), offre.getDuree_valide(), offre.getPriorite());
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
@@ -316,7 +312,7 @@ public class Resource {
 		Header header = new Header();
 		Object data = null;
 		try {
-			double chaff = statService.getChiffreAffaire();
+			String chaff = statService.getChiffreAffaire();
 			data = chaff;
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
@@ -424,6 +420,20 @@ public class Resource {
 		Object data = null;
 		try {
 			offreTypeService.delete(id_offre_and_type);			
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;		
+	}	
+	
+	@GetMapping("/countinvalide")
+	public Header getCountInvalide() throws Exception{
+		Header header = new Header();
+		Object data = null;
+		try {
+			data = statService.getMvtNonValidate();
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);

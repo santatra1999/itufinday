@@ -59,8 +59,8 @@ public class StatistiqueDaoService {
 		return listChaffJour;
 	}
 	
-	public double getChiffreAffaire() throws Exception {
-		double chaff = 0;
+	public String getChiffreAffaire() throws Exception {
+		String chaff = "0.00";
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -71,7 +71,7 @@ public class StatistiqueDaoService {
         	pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while(rs.next()){
-            	chaff = rs.getDouble("chaff");
+            	chaff = rs.getString("chaff");
             }
         }catch(Exception e){
             throw e;
@@ -105,5 +105,29 @@ public class StatistiqueDaoService {
             if(conn!=null)conn.close();
         }				
 		return isa;
+	}
+	
+	public int getMvtNonValidate() throws Exception {
+		int isa = 0;
+		PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        String sql = "SELECT * FROM V_COUNT_MVT_NON_VALIDATE";
+        try{
+            conn = new Helper().getConnexionPsql();
+        	pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()){
+            	isa = rs.getInt("invalide");
+            }
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }				
+		return isa;		
 	}
 }

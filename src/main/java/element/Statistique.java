@@ -7,6 +7,14 @@ public class Statistique {
 	private int frequence;
 	private String date_mvt_frequence;
 	private double chaff_total;
+	private int mvt_non_validate;
+	
+	public int getMvt_non_validate() {
+		return mvt_non_validate;
+	}
+	public void setMvt_non_validate(int mvt_non_validate) {
+		this.mvt_non_validate = mvt_non_validate;
+	}
 	public double getChaff_jour() {
 		return chaff_jour;
 	}
@@ -48,6 +56,11 @@ public class Statistique {
 		super();
 		this.setFrequence(frequence);
 		this.setDate_mvt_frequence(date_mvt);
+	}
+
+	public Statistique(int mvt_non_validate) {
+		super();
+		this.setMvt_non_validate(mvt_non_validate);
 	}
 	
 }
