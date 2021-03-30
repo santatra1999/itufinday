@@ -16,7 +16,14 @@ public class Offre {
 	double valeur_ot;
 	String nom_type_offre;
 	String appel;
+	String duree_valideS;
 	
+	public String getDuree_valideS() {
+		return duree_valideS;
+	}
+	public void setDuree_valideS(String duree_valideS) {
+		this.duree_valideS = duree_valideS;
+	}
 	public int getId_offre_and_type() {
 		return id_offre_and_type;
 	}
@@ -190,6 +197,19 @@ public class Offre {
 		this.setAppel(appel);
 		this.setPriorite(priorite);
 	}
+	
+	public Offre(int id_offre, int id_offre_and_type, String nom_offre, String nom_type_offre, double value, String duree_valideS, double valeur,
+			String appel, int priorite) throws Exception {
+		this.setId_offre(id_offre);
+		this.setId_offre_and_type(id_offre_and_type);
+		this.setNom_offre(nom_offre);
+		this.setNom_type_offre(nom_type_offre);
+		this.setValue(value);
+		this.setDuree_valideS(duree_valideS);
+		this.setValeur_ot(valeur);
+		this.setAppel(appel);
+		this.setPriorite(priorite);
+	}	
 	public int getIdTypeByName(String nom_type, Connection conn) throws Exception {
 		int idtype = 0;
         PreparedStatement pst = null;
