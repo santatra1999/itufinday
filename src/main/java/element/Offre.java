@@ -185,7 +185,7 @@ public class Offre {
 		super();
 	}
 	
-	public Offre(int id_offre, int id_offre_and_type, String nom_offre, String nom_type_offre, double value, int duree_valide, double valeur,
+	/*public Offre(int id_offre, int id_offre_and_type, String nom_offre, String nom_type_offre, double value, int duree_valide, double valeur,
 			String appel, int priorite) throws Exception {
 		this.setId_offre(id_offre);
 		this.setId_offre_and_type(id_offre_and_type);
@@ -196,7 +196,7 @@ public class Offre {
 		this.setValeur_ot(valeur);
 		this.setAppel(appel);
 		this.setPriorite(priorite);
-	}
+	}*/
 	
 	public Offre(int id_offre, int id_offre_and_type, String nom_offre, String nom_type_offre, double value, String duree_valideS, double valeur,
 			String appel, int priorite) throws Exception {
