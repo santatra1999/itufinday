@@ -2,6 +2,8 @@ package element;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import org.springframework.stereotype.Component;
 
@@ -12,8 +14,9 @@ public class Offre_and_typeDaoService {
 	
 	public void saveOffre_and_type(Offre_and_type offre) throws Exception {
 		PreparedStatement pst=null; 
-        String sql = "INSERT INTO offre_and_type VALUES (NEXTVAL('OffreAndType_Sequence'),?,?,?)";
+        String sql = "INSERT INTO offre_and_type VALUES (NEXTVAL('OffreAndType_Sequence'),?,?,?,?,?)";
         Connection conn = null;    
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         try {
         	conn = new Helper().getConnexionPsql();
         	int id_offre =  new Offre().getIdOffreByName(offre.getNom_offre(), conn);
@@ -21,7 +24,9 @@ public class Offre_and_typeDaoService {
         	pst=conn.prepareStatement(sql);
             pst.setInt(1, id_offre);     
             pst.setInt(2, id_type_offre);  
-            pst.setDouble(3, offre.getValeur());     
+            pst.setDouble(3, offre.getValeur());
+            pst.setTime(4, new java.sql.Time(formatter.parse(offre.getDebut()).getTime()));
+            pst.setTime(5, new java.sql.Time(formatter.parse(offre.getFin()).getTime()));
             System.out.println(pst);  
             pst.executeUpdate();
             conn.commit();
@@ -37,14 +42,16 @@ public class Offre_and_typeDaoService {
 	public void update(int id_offre_and_type, Offre_and_type o) throws Exception {
         PreparedStatement pst = null;
         Connection conn = null;
-        
-        String sql = "UPDATE offre_and_type SET valeur=? WHERE id_offre_and_type=?";
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        String sql = "UPDATE offre_and_type SET valeur=?,debut=?,fin=? WHERE id_offre_and_type=?";
         try{
             conn = new Helper().getConnexionPsql();
             pst = conn.prepareStatement(sql);
             pst.setDouble(1, o.getValeur());
-            pst.setInt(2, id_offre_and_type);
-        	System.out.println(pst);
+            pst.setInt(4, id_offre_and_type);
+            pst.setTime(2, new java.sql.Time(formatter.parse(o.getDebut()).getTime()));
+            pst.setTime(3, new java.sql.Time(formatter.parse(o.getFin()).getTime()));
+            System.out.println(pst);
             pst.executeUpdate();
         	conn.commit();
         }catch(Exception e){

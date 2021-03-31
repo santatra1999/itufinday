@@ -2,6 +2,7 @@ package element;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import utils.Helper;
@@ -55,5 +56,30 @@ public class Token {
         }finally{
             if(pst!=null)pst.close();
         }			
+	}
+	
+	public Token getTokenById(int idclient) throws Exception {
+		Token token = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        String sql = "SELECT * from TOKEN where id_client=?";
+        try{
+        	conn = new Helper().getConnexionPsql();
+        	pst = conn.prepareStatement(sql);
+            pst.setInt(1, idclient);
+        	System.out.println(pst);
+            rs = pst.executeQuery();
+            while(rs.next()){
+            	token = new Token(rs.getInt("id_client"), rs.getString("token"), rs.getString("date_expir"));
+            }
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }			
+		return token;		
 	}
 }

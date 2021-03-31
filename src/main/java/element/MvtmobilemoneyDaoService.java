@@ -83,16 +83,21 @@ public class MvtmobilemoneyDaoService {
         }	
 	}
 	
-	/*public void save() {
+	/*public void save(Mvtmobilemoney mvtMobile) {
        PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
         
-        String sql = "INSERT INTO mvtmobilemoney ";
+        String sql = "INSERT INTO MVTMOBILEMONEY VALUES (NEXTVAL('MvtMobileMoney_sequence'),?,?,?,NOW(),?,?);";
         try{
             conn = new Helper().getConnexionPsql();
             pst = conn.prepareStatement(sql);
-            pst.setInt(1, idmvt);
+            pst.setInt(1, id_mobile_money);
+            pst.setString(2, typemvt);
+            pst.setDouble(3, value);
+            pst.setString(4, date_mvt);
+            pst.setDouble(5, frais);
+            pst.setInt(6, validation);
         	pst.executeUpdate();
         	conn.commit();
         }catch(Exception e){
@@ -102,6 +107,6 @@ public class MvtmobilemoneyDaoService {
             if(pst!=null)pst.close();
             if(rs!=null)rs.close();
             if(conn!=null)conn.close();
-        }			
-	}*/
+        }	
+	}*/		
 }

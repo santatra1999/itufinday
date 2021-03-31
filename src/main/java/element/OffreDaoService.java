@@ -184,7 +184,7 @@ public class OffreDaoService {
         ResultSet rs = null;
         Connection conn = null;
         
-        String sql = "SELECT * FROM V_DETAIL_OFFRE";
+        String sql = "SELECT * FROM V_DETAIL_OFFRE ORDER BY id_offre";
         try{
             conn = new Helper().getConnexionPsql();
         	pst = conn.prepareStatement(sql);

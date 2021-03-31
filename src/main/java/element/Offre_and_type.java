@@ -5,7 +5,21 @@ public class Offre_and_type {
 	private int id_offre;
 	private int id_type_offre;
 	private double valeur;
+	String debut;
+	String fin;
 
+	public String getDebut() {
+		return debut;
+	}
+	public void setDebut(String debut) {
+		this.debut = debut;
+	}
+	public String getFin() {
+		return fin;
+	}
+	public void setFin(String fin) {
+		this.fin = fin;
+	}
 	private String nom_offre;
 	private String nom_type_offre;
 	public int getId_offre_and_type() {
@@ -60,11 +74,13 @@ public class Offre_and_type {
 		this.setId_type_offre(id_type_offre);
 		this.setValeur(valeur);
 	}
-	public Offre_and_type(String nom_offre, String nom_type_offre, double valeur) {
+	public Offre_and_type(String nom_offre, String nom_type_offre, double valeur,String debut,String fin) {
 		super();
 		this.setNom_offre(nom_offre);
 		this.setNom_type_offre(nom_type_offre);
 		this.setValeur(valeur);
+		this.setDebut(debut);
+		this.setFin(fin);
 	}	
 	public Offre_and_type(double valeur) {
 		super();

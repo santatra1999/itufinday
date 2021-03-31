@@ -51,7 +51,8 @@ public class Resource {
 		try {
 			Client client = new Client(identif,mdp);
 			client = clientService.connexion(client);
-			data = client;
+			Token token = new Token().getTokenById(client.getId_client());
+			data = token;
 			if(client == null) {
 				header = new Header(400,"Bad Request",data);
 			} else {
@@ -71,7 +72,8 @@ public class Resource {
 		try {
 			Client savedUser = new Client(formData.getNom(), formData.getDatenaiss(), formData.getMdp(), formData.getIdentif(), formData.getNum());
 			clientService.saveClient(savedUser);
-			data = savedUser;
+			Token token = new Token().getTokenById(savedUser.getId_client());
+			data = token;
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
