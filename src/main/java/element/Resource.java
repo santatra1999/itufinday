@@ -74,10 +74,12 @@ public class Resource {
 		try {
 			Client savedUser = new Client(formData.getNom(), formData.getDatenaiss(), formData.getMdp(), formData.getIdentif(), formData.getNum());
 			clientService.saveClient(savedUser);
-			Token token = new Token().getTokenById(savedUser.getId_client());
+			Client client = new Client(formData.getIdentif(),formData.getMdp());
+			client = clientService.connexion(client);
+			Token token = new Token().getTokenById(client.getId_client());
 			ArrayList<Token> tokenList = new ArrayList<>();
 			tokenList.add(token);
-			data = tokenList.add(token);
+			data = tokenList;
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
