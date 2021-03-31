@@ -18,12 +18,12 @@ public class Test {
 		// new ().getCreditClient(1);
 		/*ArrayList<Appel> appel = new AppelDaoService().getHistoriqueAppel(2);
 		for(Appel app: appel) {
-			System.out.println(app.getNumRecep());
-		}*/
-		double amount =20021656;
+			System.out.println(app.getDate());
+		}
+		/*double amount =20021656;
 		Locale locale = new Locale("en", "US");      
 		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-		System.out.println(currencyFormatter.format(amount));
+		System.out.println(currencyFormatter.format(amount));*/
 	}
 
 }

@@ -120,5 +120,13 @@ public class Client {
 		this.setMdp(mdp);
 		this.setIdentif(identif);		
 	}	
-	
+	public Client(int id_client, String nom, String datenaiss, String mdp, String identif, String num) throws Exception {
+		super();
+		this.setId_client(id_client);
+		this.setNom(nom);
+		this.setDatenaiss(datenaiss);
+		this.setMdp(mdp);
+		this.setIdentif(identif);
+		this.setNum(num);
+	}	
 }

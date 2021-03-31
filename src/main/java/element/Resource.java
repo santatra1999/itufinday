@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import utils.Header;
 
 @CrossOrigin(origins = "*", allowedHeaders="*")
@@ -449,6 +448,42 @@ public class Resource {
 		}
 		return header;		
 	}	
+	
+	@GetMapping("/info/{idclient}")
+	public Header getInfoClient(@PathVariable int idclient) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		Client client = null;
+		try {
+			client = clientService.getInformation(idclient);
+			ArrayList<Client> clientList = new ArrayList<>();
+			clientList.add(client);
+			data = clientList;
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}
+	
+	@PostMapping("/depot/")
+	public Header depot(@RequestBody Mvtmobilemoney mvt, @RequestHeader("Authorization") String token) throws Exception {
+		Header header = null;
+		Object data = null;
+		try {
+			String validToken = token.split(" ")[1];
+			int idclient = clientService.getIdclient(validToken);
+			Client client = clientService.getInformation(idclient);
+			//mvt.set
+			//mvtService.saveMoneyClient(mvt);
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}		
+		return header;
+	}
 }
 
 

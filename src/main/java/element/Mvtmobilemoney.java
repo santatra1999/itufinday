@@ -83,6 +83,15 @@ public class Mvtmobilemoney {
 	public Mvtmobilemoney() {
 		super();
 	}
+	public Mvtmobilemoney(int id_mobile_money, String typemvt, double value, String date_mvt, double frais,int validation) {
+		super();
+		this.setId_mobile_money(id_mobile_money);
+		this.setTypemvt(typemvt);
+		this.setValue(value);
+		this.setDate_mvt(date_mvt);
+		this.setFrais(frais);
+		this.setValidation(validation);
+	}
 	public int getId_client() {
 		return id_client;
 	}

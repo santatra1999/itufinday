@@ -3,6 +3,7 @@ package element;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -282,4 +283,28 @@ public class ClientDaoService extends Client {
 		return solde;
 	}	
 
+	public Client getInformation(int idclient) throws Exception {
+		Client client = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        String sql = "SELECT * FROM V_DETAIL_CLIENT WHERE id_client=?";
+        try{
+            conn = new Helper().getConnexionPsql();
+        	pst = conn.prepareStatement(sql);
+            pst.setInt(1, idclient);
+            rs = pst.executeQuery();
+            System.out.println(pst);
+            while(rs.next()){
+                client = new Client(rs.getInt("id_client"), rs.getString("nom"), rs.getString("datenaiss"), rs.getString("mdp"), rs.getString("identif"), rs.getString("num"));
+            }
+        } catch(Exception e) {
+            throw e;
+        } finally {
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }			
+		return client;
+	}
 }

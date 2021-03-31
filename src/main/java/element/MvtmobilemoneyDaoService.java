@@ -3,6 +3,7 @@ package element;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
@@ -83,21 +84,19 @@ public class MvtmobilemoneyDaoService {
         }	
 	}
 	
-	/*public void save(Mvtmobilemoney mvtMobile) {
-       PreparedStatement pst = null;
+	public void save(Mvtmobilemoney mvtMobile, Connection conn) throws Exception {
+		PreparedStatement pst = null;
         ResultSet rs = null;
-        Connection conn = null;
         
-        String sql = "INSERT INTO MVTMOBILEMONEY VALUES (NEXTVAL('MvtMobileMoney_sequence'),?,?,?,NOW(),?,?);";
+        String sql = "INSERT INTO MVTMOBILEMONEY VALUES (NEXTVAL('MvtMobileMoney_sequence'),?,?,?,?,?,?)";
         try{
-            conn = new Helper().getConnexionPsql();
             pst = conn.prepareStatement(sql);
-            pst.setInt(1, id_mobile_money);
-            pst.setString(2, typemvt);
-            pst.setDouble(3, value);
-            pst.setString(4, date_mvt);
-            pst.setDouble(5, frais);
-            pst.setInt(6, validation);
+            pst.setInt(1, mvtMobile.getId_mobile_money());
+            pst.setString(2, mvtMobile.getTypemvt());
+            pst.setDouble(3, mvtMobile.getValue());
+            pst.setString(4, mvtMobile.getDate_mvt());
+            pst.setDouble(5, mvtMobile.getFrais());
+            pst.setInt(6, mvtMobile.getValidation());
         	pst.executeUpdate();
         	conn.commit();
         }catch(Exception e){
@@ -106,7 +105,22 @@ public class MvtmobilemoneyDaoService {
         }finally{
             if(pst!=null)pst.close();
             if(rs!=null)rs.close();
+        }	
+	}		
+	
+	public void saveMoneyClient(Mvtmobilemoney mvtMobileInput) throws Exception {
+        Connection conn = null;
+        try {
+            conn = new Helper().getConnexionPsql();	
+            Mvtmobilemoney mvtMobile = new Mvtmobilemoney(mvtMobileInput.getId_mobile_money(),"E", mvtMobileInput.getValue(), "NOW()", mvtMobileInput.getFrais(), 0); 
+            this.save(mvtMobile, conn);
+        	conn.commit();
+        } catch(Exception e) {
+        	conn.rollback();
+        	throw e;
+        } finally {
             if(conn!=null)conn.close();
         }	
-	}*/		
+		
+	}
 }
