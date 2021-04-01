@@ -46,6 +46,8 @@ public class Resource {
 	private DetailoffreDaoService detailoffreService; 
 	@Autowired
 	private TransposeDetailOffreAppelDaoService transposeService; 
+	@Autowired
+	private CreditDaoService creditService; 
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -558,6 +560,22 @@ public class Resource {
 		Object data = null;
 		try {
 			detailcoutService.deleteCout(id_offre_and_type, typeappel);
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}
+	
+	@PostMapping("/achatcredit/")
+	public Header achatCredit(@RequestBody Credit credit, @RequestHeader("Authorization") String token) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			String validToken = token.split(" ")[1];
+			int idclient = clientService.getIdclient(validToken);
+			creditService.achatCredit(idclient, null, credit);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);

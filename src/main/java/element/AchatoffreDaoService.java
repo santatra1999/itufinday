@@ -20,7 +20,7 @@ public class AchatoffreDaoService {
         String sql = "SELECT * FROM V_RESTE_ACHAT_OFFRE where id_client=?";
         try{
             conn = new Helper().getConnexionPsql();
-            new Token().deleteToken(conn);
+            //new Token().deleteToken(conn);
         	pst = conn.prepareStatement(sql);
         	pst.setInt(1, idclient);
             rs = pst.executeQuery();

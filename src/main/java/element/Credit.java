@@ -1,9 +1,18 @@
 package element;
 
 public class Credit {
+	
 	private int id_transact;
 	private int idmvt;
+	private double credit;
 	
+	public double getCredit() {
+		return credit;
+	}
+	public void setCredit(double credit) throws Exception {
+		if(credit <= 0) throw new Exception("Credit invalide");
+		this.credit = credit;
+	}
 	public int getId_transact() {
 		return id_transact;
 	}
@@ -23,10 +32,12 @@ public class Credit {
 		this.idmvt = idmvt;
 	}
 	
+	public Credit(double valeur) throws Exception {
+		super();
+		this.setCredit(valeur);
+	}	
+	
 	public Credit() {
 		super();
-	}
-	
-	
-	
+	}	
 }

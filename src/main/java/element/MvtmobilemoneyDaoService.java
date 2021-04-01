@@ -111,15 +111,15 @@ public class MvtmobilemoneyDaoService {
         }	
 	}		
 
-	public void retrait(Mvtmobilemoney mvtMobile, Connection conn) throws Exception {
+	public void retraitCredit(int id_mobile_money, double value, Connection conn) throws Exception {
 		PreparedStatement pst = null;
         ResultSet rs = null;
         
         String sql = "INSERT INTO MVTMOBILEMONEY VALUES (NEXTVAL('MvtMobileMoney_sequence'),?,'S',?,NOW(),0,1)";
         try{
         	pst = conn.prepareStatement(sql);
-            pst.setInt(1, mvtMobile.getId_mobile_money());
-            pst.setDouble(2, -1*mvtMobile.getValue());
+            pst.setInt(1, id_mobile_money);
+            pst.setDouble(2, -1*value);
         	System.out.println(pst);
             pst.executeUpdate();
         	conn.commit();

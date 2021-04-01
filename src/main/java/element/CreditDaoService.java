@@ -31,16 +31,17 @@ public class CreditDaoService {
         }		
 	}
 	
-	public void achatCredit(int idclient, Mvtmobilemoney mvtMobile, Credit credit) throws Exception {
+	public void achatCredit(int idclient, double value, Credit credit) throws Exception {
 		Connection conn = null;
 		
 		try {
 			conn = new Helper().getConnexionPsql();
 			double solde = new ClientDaoService().getSoldeMvola(idclient, conn); 
-			if(solde < mvtMobile.getValue()) {
+			if(solde < value) {
 				throw new Exception("Solde insuffisant");
 			}
-			new MvtmobilemoneyDaoService().retrait(mvtMobile, conn);
+			int id_mobile_money = new MvtmobilemoneyDaoService().getIdMobileMoneyByIdClient(idclient);
+			new MvtmobilemoneyDaoService().retraitCredit(id_mobile_money, value, conn);
 			credit.setIdmvt(new MvtmobilemoneyDaoService().getIdMobileMoneyByIdClient(idclient));
 			this.save(credit, conn);
 		} catch(Exception ex) {

@@ -25,7 +25,7 @@ public class AppelDaoService {
         Connection conn = null;
 	    try {
         	conn = new Helper().getConnexionPsql();
-        	new Token().deleteToken(conn);
+        	//new Token().deleteToken(conn);
         	database = new Helper().getConnexionMongodb();
 	        MongoCollection<Document> collection = database.getCollection("Appel");
 	        String numClient = new ClientDaoService().getClientnumById(idclient, conn);

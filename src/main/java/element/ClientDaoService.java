@@ -181,7 +181,7 @@ public class ClientDaoService extends Client {
         
         try{
         	conn = new Helper().getConnexionPsql();
-        	new Token().deleteToken(conn);
+        	// new Token().deleteToken(conn);
         	String numero = this.getClientnumById(idclient, conn);
         	String sql = "SELECT (COALESCE((SELECT SUM(VALUE) FROM ENTREE_CREDIT WHERE num LIKE '%"+numero+"%'),0))-((COALESCE((SELECT SUM(VALEUR) FROM SORTIE_CREDIT_APPEL WHERE num LIKE '%"+numero+"%'),0))+(COALESCE((SELECT SUM(VALUE) FROM SORTIE_CREDIT_OFFRE WHERE num LIKE '%"+numero+"%'),0))) AS CREDIT";        	
         	pst = conn.prepareStatement(sql);        	
@@ -263,7 +263,7 @@ public class ClientDaoService extends Client {
         		+ "		clientnum ON clientnum.id_client_num=mobilemoney.id_client_num\r\n"
         		+ "	WHERE clientnum.id_client=?";
         try{
-        	new Token().deleteToken(conn);
+        	// new Token().deleteToken(conn);
         	pst = conn.prepareStatement(sql);
             pst.setInt(1, idclient);
             rs = pst.executeQuery();
