@@ -24,7 +24,7 @@ public class DetailoffreDaoService {
         	pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while(rs.next()){
-            	detailOffreList.add(new Detailoffre(rs.getInt("id_offre"),rs.getInt("id_offre_and_type"),rs.getString("nom_offre"), rs.getString("nom_type_offre"), rs.getDouble("value"), rs.getString("duree_valide"), rs.getDouble("valeur"), rs.getInt("priorite"), rs.getString("appel"), rs.getInt("id_appelcout"), rs.getString("debut"), rs.getString("fin"), rs.getInt("MEME"), rs.getInt("DIFFERENT"), rs.getInt("INTERNATIONAL")));
+            	detailOffreList.add(new Detailoffre(rs.getInt("id_offre"),rs.getInt("id_offre_and_type"),rs.getString("nom_offre"), rs.getString("nom_type_offre"), rs.getDouble("value"), rs.getString("duree_valide"), rs.getDouble("valeur"), rs.getInt("priorite"), rs.getString("appel"), rs.getString("debut"), rs.getString("fin"), rs.getInt("MEME"), rs.getInt("DIFFERENT"), rs.getInt("INTERNATIONAL")));
             }
         }catch(Exception e){
             throw e;

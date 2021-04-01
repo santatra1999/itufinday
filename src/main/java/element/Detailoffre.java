@@ -108,7 +108,7 @@ public class Detailoffre {
 		this.international = international;
 	}
 	public Detailoffre(int id_offre, int id_offre_and_type, String nom_offre, String nom_type_offre, double value,
-			String duree_valide, double valeur, int priorite, String appel, int id_appelcout, String debut, String fin,
+			String duree_valide, double valeur, int priorite, String appel, String debut, String fin,
 			int meme, int different, int international) {
 		super();
 		this.id_offre = id_offre;
@@ -120,7 +120,7 @@ public class Detailoffre {
 		this.valeur = valeur;
 		this.priorite = priorite;
 		this.appel = appel;
-		this.id_appelcout = id_appelcout;
+		//this.id_appelcout = id_appelcout;
 		this.debut = debut;
 		this.fin = fin;
 		this.meme = meme;

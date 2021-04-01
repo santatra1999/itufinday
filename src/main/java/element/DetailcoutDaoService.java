@@ -67,7 +67,7 @@ public class DetailcoutDaoService {
         ResultSet rs = null;
         Connection conn = null;
         String sql = "INSERT INTO DETAILCOUT VALUES (NEXTVAL('DetailCout_Sequence'),?,?,?)";
-        try{
+        try {
         	conn = new Helper().getConnexionPsql();
         	pst = conn.prepareStatement(sql);
             pst.setInt(1, detailC.getId_offre_and_type());
@@ -76,10 +76,10 @@ public class DetailcoutDaoService {
         	System.out.println(pst);
             pst.executeUpdate();
         	conn.commit();
-        }catch(Exception e){
+        } catch(Exception e) {
         	conn.rollback();
         	throw e;
-        }finally{
+        } finally {
             if(pst!=null)pst.close();
             if(rs!=null)rs.close();
             if(conn!=null)conn.close();
