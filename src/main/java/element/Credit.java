@@ -32,9 +32,9 @@ public class Credit {
 		this.idmvt = idmvt;
 	}
 	
-	public Credit(double valeur) throws Exception {
+	public Credit(double credit) throws Exception {
 		super();
-		this.setCredit(valeur);
+		this.setCredit(credit);
 	}	
 	
 	public Credit() {
