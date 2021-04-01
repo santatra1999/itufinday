@@ -575,7 +575,7 @@ public class Resource {
 		try {
 			String validToken = token.split(" ")[1];
 			int idclient = clientService.getIdclient(validToken);
-			creditService.achatCredit(idclient, null, credit);
+			//creditService.achatCredit(idclient, null, credit);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
