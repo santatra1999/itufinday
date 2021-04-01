@@ -36,18 +36,19 @@ public class DetailcoutDaoService {
 		return detailCoutList;
 	}
 	
-	public void update(Detailcout detailC, int id_appelcout) throws Exception {
+	public void update(Detailcout detailC, int id_offre_and_type, int typeappel) throws Exception {
 		
 		PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
-        String sql = "UPDATE detailcout SET typeappel=?,coutsec=? WHERE id_appelcout=?";
+        String sql = "UPDATE detailcout SET typeappel=?, coutsec=? WHERE id_offre_and_type=? AND typeappel=?";
         try{
         	conn = new Helper().getConnexionPsql();
         	pst = conn.prepareStatement(sql);
             pst.setInt(1, detailC.getTypeappel());
-            pst.setDouble(2, detailC.getCousec());
-            pst.setInt(3, id_appelcout);
+            pst.setDouble(2, detailC.getCoutsec());
+            pst.setInt(3, id_offre_and_type);
+            pst.setInt(4, typeappel);
         	System.out.println(pst);
             pst.executeUpdate();
         	conn.commit();
@@ -72,7 +73,7 @@ public class DetailcoutDaoService {
         	pst = conn.prepareStatement(sql);
             pst.setInt(1, detailC.getId_offre_and_type());
             pst.setInt(2, detailC.getTypeappel());
-            pst.setDouble(3, detailC.getCousec());
+            pst.setDouble(3, detailC.getCoutsec());
         	System.out.println(pst);
             pst.executeUpdate();
         	conn.commit();

@@ -524,12 +524,12 @@ public class Resource {
 		return header;
 	}	
 	
-	@PutMapping("/detailcout/{id_appelcout}")
-	public Header updateDetailCout(@PathVariable int id_appelcout, @RequestBody Detailcout dc) throws Exception {
+	@PutMapping("/detailcout/{id_offre_and_type}/{typeappel}")
+	public Header updateDetailCout(@PathVariable int id_offre_and_type, @PathVariable int typeappel, @RequestBody Detailcout dc) throws Exception {
 		Header header = new Header();
 		Object data = null;
 		try {
-			detailcoutService.update(dc, id_appelcout);
+			detailcoutService.update(dc, id_offre_and_type, typeappel);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
