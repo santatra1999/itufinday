@@ -583,6 +583,20 @@ public class Resource {
 		}
 		return header;
 	}
+	
+	@GetMapping("/detailoffrebyid/{id_offre}")
+	public Header getDetailOffreById(@PathVariable int id_offre) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			data = detailoffreService.getDetailOffreById(id_offre);
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}	
 }
 
 

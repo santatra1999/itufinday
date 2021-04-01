@@ -74,6 +74,10 @@ public class Achatoffre {
 	public Achatoffre() {
 		super();
 	}
-	
+	public Achatoffre(int id_offre, int id_client_num) {
+		super();
+		this.setId_offre(id_offre);
+		this.setId_client_num(id_client_num);
+	}
 	
 }

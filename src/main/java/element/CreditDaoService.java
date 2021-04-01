@@ -20,6 +20,7 @@ public class CreditDaoService {
         try{
         	pst = conn.prepareStatement(sql);
             pst.setInt(1, credit.getIdmvt());
+            System.out.println(pst);
             pst.executeUpdate();
         	conn.commit();
         }catch(Exception e){
@@ -44,7 +45,7 @@ public class CreditDaoService {
 			int id_mobile_money = new MvtmobilemoneyDaoService().getIdMobileMoneyByIdClient(idclient);
 			new MvtmobilemoneyDaoService().retraitCredit(id_mobile_money, value.getCredit(), conn);
 			Credit credit = new Credit();
-			credit.setIdmvt(new MvtmobilemoneyDaoService().getIdMobileMoneyByIdClient(idclient));
+			credit.setIdmvt(new MvtmobilemoneyDaoService().getIdMvtByIdMobileMoney(new MvtmobilemoneyDaoService().getIdMobileMoneyByIdClient(idclient)));
 			this.save(credit, conn);
 		} catch(Exception ex) {
 			throw ex;

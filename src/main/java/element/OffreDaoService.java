@@ -59,6 +59,30 @@ public class OffreDaoService {
 		return offreList;
 	}
 
+	public ArrayList<Offre> getOffreByIdoffre() throws Exception {
+		ArrayList<Offre> offreList= new ArrayList<>();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        String sql = "SELECT * FROM offre WHERE id_offre=?";
+        try{
+            conn = new Helper().getConnexionPsql();
+        	pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()){
+            	offreList.add(new Offre(rs.getInt("id_offre"), rs.getString("nom_offre"), rs.getDouble("value"), rs.getInt("duree_valide"), rs.getInt("priorite")));
+            }
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }				
+		return offreList;
+	}
+	
 	public void saveOffre_and_type(Offre offre) throws Exception {
 		PreparedStatement pst=null; 
         String sql = "INSERT INTO offre_and_type VALUES (NEXTVAL('OffreAndType_Sequence'),?,?,?)";

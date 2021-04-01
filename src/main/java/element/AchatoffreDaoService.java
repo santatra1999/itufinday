@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import utils.Helper;
 
 @Component
-public class AchatoffreDaoService {
+public class AchatoffreDaoService { 
 	public ArrayList<Achatoffre> getOffre(int idclient) throws Exception {
 		ArrayList<Achatoffre> achatOffreList = new ArrayList<>();
         PreparedStatement pst = null;
@@ -35,5 +35,37 @@ public class AchatoffreDaoService {
             if(conn!=null)conn.close();
         }						
 		return achatOffreList;
+	}
+	
+	public void save(Achatoffre achatOffre, Connection conn) throws Exception {
+        PreparedStatement pst=null; 
+        String sql = "INSERT INTO ACHATOFFRE VALUES(NEXTVAL('ID_OFFRE_Sequence'),?,?,NOW())";           
+        
+        try {        	
+        	pst=conn.prepareStatement(sql);
+            pst.setInt(1, achatOffre.getId_offre());
+            pst.setInt(2, achatOffre.getId_client_num());
+            pst.executeUpdate();    
+        } catch(Exception ex) {
+            throw ex;
+        } finally {
+            if(pst!=null) pst.close();        
+        }		
+	}
+	
+	public void achatOffre(Achatoffre achatOffre, int id_client) throws Exception {
+		Connection conn = null;
+        try {        	
+        	conn = new Helper().getConnexionPsql();
+        	double credit = new ClientDaoService().getCreditClient(id_client);
+        	//if() {
+        		
+        	//}
+        	this.save(achatOffre, conn);
+        } catch(Exception ex) {
+            throw ex;
+        } finally {
+            if(conn!=null) conn.close();        
+        }			
 	}
 }
