@@ -41,9 +41,11 @@ public class Resource {
 	@Autowired
 	private Offre_and_typeDaoService offreTypeService;
 	@Autowired
-	private DetailcoutDaoService detailService; 
+	private DetailcoutDaoService detailcoutService; 
 	@Autowired
 	private DetailoffreDaoService detailoffreService; 
+	@Autowired
+	private TransposeDetailOffreAppelDaoService transposeService; 
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -499,7 +501,49 @@ public class Resource {
 		Header header = new Header();
 		Object data = null;
 		try {
-			data = detailService.getDetailCout();
+			data = detailcoutService.getDetailCout();
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}	
+	
+	@GetMapping("/transpose/")
+	public Header getTranspose() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			data = transposeService.getTranspose();
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}	
+	
+	@PutMapping("/detailcout/{id_appelcout}")
+	public Header updateDetailCout(@PathVariable int id_appelcout, @RequestBody Detailcout dc) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			detailcoutService.update(dc, id_appelcout);
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}
+	
+	@PostMapping("/detailcoutInsert/")
+	public Header saveDetailCout(@RequestBody Detailcout detailInsert) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			detailcoutService.detailInsert(detailInsert);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
