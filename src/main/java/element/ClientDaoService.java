@@ -249,11 +249,10 @@ public class ClientDaoService extends Client {
         }		
 	}
 
-	public double getSoldeMvola(int idclient) throws Exception {
+	public double getSoldeMvola(int idclient, Connection conn) throws Exception {
 		double solde = 0;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        Connection conn = null;
         String sql = "	SELECT \r\n"
         		+ "		SUM(VALUE)-SUM(FRAIS) AS VALUE_MOBILEMONEY \r\n"
         		+ "	FROM \r\n"
@@ -264,7 +263,6 @@ public class ClientDaoService extends Client {
         		+ "		clientnum ON clientnum.id_client_num=mobilemoney.id_client_num\r\n"
         		+ "	WHERE clientnum.id_client=?";
         try{
-        	conn = new Helper().getConnexionPsql();
         	new Token().deleteToken(conn);
         	pst = conn.prepareStatement(sql);
             pst.setInt(1, idclient);
@@ -277,12 +275,25 @@ public class ClientDaoService extends Client {
         }finally{
             if(pst!=null)pst.close();
             if(rs!=null)rs.close();
-            if(conn!=null)conn.close();
         }		
 	
 		return solde;
 	}	
 
+	public double getSoldeMvola(int idclient) throws Exception {
+		double soldeMvola = 0;
+		Connection conn = null;
+		try {
+			conn = new Helper().getConnexionPsql();
+			soldeMvola = getSoldeMvola(idclient, conn);
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			if(conn!=null) conn.close();
+		}
+		return soldeMvola;
+	}
+	
 	public Client getInformation(int idclient) throws Exception {
 		Client client = null;
         PreparedStatement pst = null;

@@ -1,6 +1,9 @@
 package element;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,6 +40,10 @@ public class Resource {
 	private AppelDaoService appelService;
 	@Autowired
 	private Offre_and_typeDaoService offreTypeService;
+	@Autowired
+	private DetailcoutDaoService detailService; 
+	@Autowired
+	private DetailoffreDaoService detailoffreService; 
 	
 	@GetMapping("/hello")
 	public String helloWorld() {
@@ -382,7 +389,7 @@ public class Resource {
 		Header header = new Header();
 		Object data = null;
 		try {
-			ArrayList<Offre> log = offreService.getDetailsOffre();	
+			ArrayList<Detailoffre> log = detailoffreService.getDetailOffre();
 			data = log;
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
@@ -475,8 +482,10 @@ public class Resource {
 			String validToken = token.split(" ")[1];
 			int idclient = clientService.getIdclient(validToken);
 			Client client = clientService.getInformation(idclient);
-			//mvt.set
-			//mvtService.saveMoneyClient(mvt);
+			int id_mobile_money = mvtService.getIdMobileMoneyByIdClient(client.getId_client());
+			mvt.setId_mobile_money(id_mobile_money);
+			mvt.setDate_mvt(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+			mvtService.depot(mvt);
 			header = new Header(200,"Ok",data);
 		} catch (Exception e) {
 			header = new Header(400,e.getMessage(),data);
@@ -484,6 +493,20 @@ public class Resource {
 		}		
 		return header;
 	}
+	
+	@GetMapping("/detailcout/")
+	public Header getDetailCout() throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			data = detailService.getDetailCout();
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}	
 }
 
 

@@ -92,6 +92,15 @@ public class Mvtmobilemoney {
 		this.setFrais(frais);
 		this.setValidation(validation);
 	}
+	/*public Mvtmobilemoney(int id_client, String typemvt, double value, String date_mvt, double frais,int validation) {
+		super();
+		this.setId_client(id_client);
+		this.setTypemvt(typemvt);
+		this.setValue(value);
+		this.setDate_mvt(date_mvt);
+		this.setFrais(frais);
+		this.setValidation(validation);
+	}	*/
 	public int getId_client() {
 		return id_client;
 	}
