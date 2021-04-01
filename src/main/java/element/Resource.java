@@ -568,7 +568,7 @@ public class Resource {
 		return header;
 	}
 	
-	@PostMapping("/achatcredit/")
+	/*@PostMapping("/achatcredit/")
 	public Header achatCredit(@RequestBody Credit credit, @RequestHeader("Authorization") String token) throws Exception {
 		Header header = new Header();
 		Object data = null;
@@ -582,7 +582,7 @@ public class Resource {
 			throw e;
 		}
 		return header;
-	}		
+	}	*/	
 }
 
 
