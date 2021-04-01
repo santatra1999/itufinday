@@ -86,4 +86,28 @@ public class DetailcoutDaoService {
             if(conn!=null)conn.close();
         }			
 	}	
+	
+	public void deleteCout(int id_offre_and_type, int typeappel) throws Exception {
+		
+		PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        String sql = "DELETE FROM DETAILCOUT WHERE id_offre_and_type = ? AND typeappel = ?";
+        try {
+        	conn = new Helper().getConnexionPsql();
+        	pst = conn.prepareStatement(sql);
+            pst.setInt(1, id_offre_and_type);
+            pst.setInt(2, typeappel);
+        	System.out.println(pst);
+            pst.executeUpdate();
+        	conn.commit();
+        } catch(Exception e) {
+        	conn.rollback();
+        	throw e;
+        } finally {
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+            if(conn!=null)conn.close();
+        }			
+	}		
 }

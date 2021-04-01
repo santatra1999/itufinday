@@ -551,6 +551,20 @@ public class Resource {
 		}
 		return header;
 	}	
+	
+	@GetMapping("/detailcoutDelete/{id_offre_and_type}/{typeappel}")
+	public Header deleteDetailCout(@PathVariable int id_offre_and_type, @PathVariable int typeappel) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			detailcoutService.deleteCout(id_offre_and_type, typeappel);
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
+	}		
 }
 
 
