@@ -2,6 +2,7 @@ package element;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import utils.Helper;
 
@@ -69,5 +70,30 @@ public class Clientnum {
         } finally {
             if(conn!=null) conn.close();
         }   		
+	}	
+	
+	public int getId_client_numById_client(int id_client, Connection conn) throws Exception {
+		
+		int id_client_num = 0;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String sql = "SELECT id_client_num from clientnum WHERE id_client=?";
+        
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, id_client);
+            rs = pst.executeQuery();
+            System.out.println(pst);
+            while(rs.next()) {
+            	id_client_num  = rs.getInt("id_client_num");
+            }
+        } catch(Exception e) {
+            throw e;
+        } finally {
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+        }		
+	
+		return id_client_num ;
 	}	
 }

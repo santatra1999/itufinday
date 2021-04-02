@@ -596,6 +596,22 @@ public class Resource {
 			throw e;
 		}
 		return header;
+	}
+	
+	@PostMapping("/achatoffre/")
+	public Header achatOffre(@RequestBody Achatoffre achatOffre, @RequestHeader("Authorization") String token) throws Exception {
+		Header header = new Header();
+		Object data = null;
+		try {
+			String validToken = token.split(" ")[1];
+			int idclient = clientService.getIdclient(validToken);
+			achatOffreService.achatOffre(achatOffre, idclient);
+			header = new Header(200,"Ok",data);
+		} catch (Exception e) {
+			header = new Header(400,e.getMessage(),data);
+			throw e;
+		}
+		return header;
 	}	
 }
 

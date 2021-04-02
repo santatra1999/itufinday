@@ -59,8 +59,8 @@ public class OffreDaoService {
 		return offreList;
 	}
 
-	public ArrayList<Offre> getOffreByIdoffre() throws Exception {
-		ArrayList<Offre> offreList= new ArrayList<>();
+	public Offre getOffreByIdoffre(int id_offre) throws Exception {
+		Offre offre = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -69,9 +69,10 @@ public class OffreDaoService {
         try{
             conn = new Helper().getConnexionPsql();
         	pst = conn.prepareStatement(sql);
+        	pst.setInt(1, id_offre);
             rs = pst.executeQuery();
             while(rs.next()){
-            	offreList.add(new Offre(rs.getInt("id_offre"), rs.getString("nom_offre"), rs.getDouble("value"), rs.getInt("duree_valide"), rs.getInt("priorite")));
+            	offre = new Offre(rs.getInt("id_offre"), rs.getString("nom_offre"), rs.getDouble("value"), rs.getInt("duree_valide"), rs.getInt("priorite"));
             }
         }catch(Exception e){
             throw e;
@@ -80,7 +81,7 @@ public class OffreDaoService {
             if(rs!=null)rs.close();
             if(conn!=null)conn.close();
         }				
-		return offreList;
+		return offre;
 	}
 	
 	public void saveOffre_and_type(Offre offre) throws Exception {

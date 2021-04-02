@@ -45,9 +45,11 @@ public class AchatoffreDaoService {
         	pst=conn.prepareStatement(sql);
             pst.setInt(1, achatOffre.getId_offre());
             pst.setInt(2, achatOffre.getId_client_num());
-            pst.executeUpdate();    
+            pst.executeUpdate(); 
+            conn.commit();
         } catch(Exception ex) {
-            throw ex;
+        	conn.rollback();
+        	throw ex;
         } finally {
             if(pst!=null) pst.close();        
         }		
@@ -58,9 +60,12 @@ public class AchatoffreDaoService {
         try {        	
         	conn = new Helper().getConnexionPsql();
         	double credit = new ClientDaoService().getCreditClient(id_client);
-        	//if() {
-        		
-        	//}
+        	Offre offre = new OffreDaoService().getOffreByIdoffre(achatOffre.getId_offre());
+        	if(credit < offre.getValue()) {
+        		throw new Exception("Credit");
+        	}
+        	int id_client_num = new Clientnum().getId_client_numById_client(id_client, conn);
+        	achatOffre.setId_client_num(id_client_num);
         	this.save(achatOffre, conn);
         } catch(Exception ex) {
             throw ex;
