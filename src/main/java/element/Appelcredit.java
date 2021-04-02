@@ -35,25 +35,31 @@ public class Appelcredit {
 	}
 	public Appelcredit(int id_appel, int id_client_num, double valeur, String date_depense) {
 		super();
-		this.id_appel = id_appel;
-		this.id_client_num = id_client_num;
-		this.valeur = valeur;
-		this.date_depense = date_depense;
+		this.setId_appel(id_appel);
+		this.setId_client_num(id_client_num);
+		this.setValeur(valeur);
+		this.setDate_depense(date_depense);
 	}
+	public Appelcredit(int id_client_num, double valeur, String date_depense) {
+		super();
+		this.setId_client_num(id_client_num);
+		this.setValeur(valeur);
+		this.setDate_depense(date_depense);
+	}	
 	public Appelcredit() {
 		super();
 	}
 	
-	/*public void save(Appelcredit ac, Connection conn) {
+	public void save(Connection conn) throws Exception {
+		
 		PreparedStatement pst=null; 
-        String sql="INSERT INTO FORFAITUSAGE VALUES(NEXTVAL('UsageForfait_Sequence'),?,?,?,?)";           
+        String sql="INSERT INTO APPELCREDIT VALUES(NEXTVAL(APPELCREDIT_Sequence),?,coutAppel,dateDeCheck);";           
         
         try {        	
         	pst=conn.prepareStatement(sql);
-            pst.setInt(1, fu.getId_achat_offre());
-            pst.setString(2, fu.getDate_usage());
-            pst.setDouble(3, fu.getNihena());
-            pst.setInt(4, fu.getId_type_offre());
+            pst.setInt(1, this.getId_client_num());
+            pst.setDouble(2, this.getValeur());
+            pst.setString(3, this.getDate_depense());
             pst.executeUpdate(); 
             //conn.commit();
         } catch(Exception ex) {
@@ -62,6 +68,6 @@ public class Appelcredit {
         } finally {
             if(pst!=null) pst.close();        
         }			
-	}*/
+	}
 
 }

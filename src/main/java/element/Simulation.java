@@ -1,5 +1,11 @@
 package element;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import utils.Helper;
+
 public class Simulation {
     
 	public int getDureeVitanyCredit(Double credit,Coutappel cout){ 
@@ -29,4 +35,86 @@ public class Simulation {
             return 2;
         }
     }	
+    
+    public int simulateAppel(int ID_CLIENT_NUM, String appeleur, String appele, String dateDeCheck, int duree) throws Exception{
+        
+    	int dureeAppel = 0;
+        String typeOffre = "APPEL";
+        Connection conn = null;
+        int similarity = getSimilarityOperateur(appeleur,appele);
+        int i = 0;
+        double coutAppel = 0.0;
+        Coutappel cout = null;
+        try {
+	        conn = new Helper().getConnexionPsql();
+	        int id_client = new Clientnum().getId_client_ById_client_num(ID_CLIENT_NUM, conn);
+	        double credit = new ClientDaoService().getCreditClient(id_client, conn);
+	        ArrayList <Achatoffre> offres = new AchatoffreDaoService().getResteAchatOffre(ID_CLIENT_NUM,dateDeCheck,typeOffre, conn);       
+	 
+	        cout=new Coutappel().getCoutAppel(similarity, conn);
+	        int dureeMaxCredit= this.getDureeVitanyCredit(credit,cout);
+	
+	        
+	        //Raha tsy misy offres
+	        if(offres.isEmpty()) {
+	            if(duree<=dureeMaxCredit) {
+	                coutAppel=duree*cout.getCoutsec();
+	                dureeAppel=duree;
+	            } else {
+	                coutAppel=dureeMaxCredit*cout.getCoutsec();
+	                dureeAppel=dureeMaxCredit;
+	            }
+	           //INSERT INTO APPELCREDIT VALUES(NEXTVAL(APPELCREDIT_Sequence),ID_CLIENT_NUM,coutAppel,dateDeCheck);
+	           
+	           new Appelcredit(ID_CLIENT_NUM,coutAppel,dateDeCheck).save(conn);
+	        } else {
+	            coutAppel=duree*cout.getCoutsec();
+	            double totalCout=0;
+	            int e=0;
+	            while(e!=2){
+	                if(i>=offres.size()){
+	                    e=1;
+	                    break;
+	                }
+	                double tempSolde=offres.get(i).getReste();
+	                if((tempSolde-coutAppel)>=0){
+	//                    offres.get(i).setReste(tempSolde-coutAppel);
+	                    dureeAppel=duree;
+	                    e=2;
+	                    //INSERT INTO FORFAITUSAGE VALUES(NEXTVAL('UsageForfait_Sequence'),offres.get(i).getIdAchatOffre(),dateDeCheck,coutAppel,offres.get(i).getID_OFFRE_AND_TYPE());
+	                    new Forfaitusage(offres.get(i).getId_achat_offre(),dateDeCheck,coutAppel,offres.get(i).getId_offre_and_type()).save(conn);
+	                }else{
+	                    coutAppel=coutAppel-tempSolde;
+	                    i++;
+	                    //INSERT INTO FORFAITUSAGE VALUES(NEXTVAL('UsageForfait_Sequence'),offres.get(i).getIdAchatOffre(),dateDeCheck,tempSolde,offres.get(i).getID_OFFRE_AND_TYPE());
+	                    new Forfaitusage(offres.get(i).getId_achat_offre(),dateDeCheck,tempSolde,offres.get(i).getId_offre_and_type()).save(conn);
+	                }
+	                totalCout+=offres.get(i).getReste();
+	                
+	            }
+	//            Raha ohatra ka tsy mbola tapitra nefa lany ny offre
+	            if(e==1){
+	                if(credit-coutAppel>=0){
+	//                    Mihena an'iny ny Credit
+	                    dureeAppel=duree;
+	                    //INSERT INTO APPELCREDIT VALUES(NEXTVAL(APPELCREDIT_Sequence),ID_CLIENT_NUM,credit-coutAppel,dateDeCheck);
+	                    new Appelcredit(ID_CLIENT_NUM,credit-coutAppel,dateDeCheck).save(conn);
+	                }else{
+	                    int dureePdtForfait=this.getDureeVitanyCredit(totalCout,cout);
+	                    dureeAppel=dureeMaxCredit+dureePdtForfait;
+	                    //INSERT INTO APPELCREDIT VALUES(NEXTVAL(APPELCREDIT_Sequence),ID_CLIENT_NUM,credit,dateDeCheck);
+	                    new Appelcredit(ID_CLIENT_NUM,credit,dateDeCheck).save(conn);
+	                }
+	            }
+	        }
+	    conn.commit();
+        } catch(Exception ex) {
+        	conn.rollback();
+        	throw ex;
+        } finally {
+        	if(conn!=null)conn.close();
+        }
+        return dureeAppel;
+        
+    }    
 }

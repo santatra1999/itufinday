@@ -173,14 +173,12 @@ public class ClientDaoService extends Client {
 		return numClient;
 	}
 	
-	public double getCreditClient(int idclient) throws Exception {
+	public double getCreditClient(int idclient, Connection conn) throws Exception {
 		double credit = 0;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        Connection conn = null;
         
         try{
-        	conn = new Helper().getConnexionPsql();
         	// new Token().deleteToken(conn);
         	String numero = this.getClientnumById(idclient, conn);
         	String sql = "SELECT (COALESCE((SELECT SUM(VALUE) FROM ENTREE_CREDIT WHERE num LIKE '%"+numero+"%'),0))-((COALESCE((SELECT SUM(VALEUR) FROM SORTIE_CREDIT_APPEL WHERE num LIKE '%"+numero+"%'),0))+(COALESCE((SELECT SUM(VALUE) FROM SORTIE_CREDIT_OFFRE WHERE num LIKE '%"+numero+"%'),0))) AS CREDIT";        	
@@ -196,10 +194,25 @@ public class ClientDaoService extends Client {
         }finally{
             if(pst!=null)pst.close();
             if(rs!=null)rs.close();
-            if(conn!=null)conn.close();
         }			
 		return credit;
 	}
+
+	public double getCreditClient(int idclient) throws Exception {
+		double credit = 0;
+        Connection conn = null;
+        
+        try{
+        	conn = new Helper().getConnexionPsql();
+        	// new Token().deleteToken(conn);
+        	credit = this.getCreditClient(idclient, conn);     	
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(conn!=null)conn.close();
+        }			
+		return credit;
+	}	
 	
 	public int getIdclient(String token) throws Exception {
 		int idclient = 0;
@@ -261,7 +274,7 @@ public class ClientDaoService extends Client {
         		+ "		mobilemoney	      ON MVTMOBILEMONEY.ID_MOBILE_MONEY=mobilemoney.ID_MOBILE_MONEY\r\n"
         		+ "	JOIN\r\n"
         		+ "		clientnum ON clientnum.id_client_num=mobilemoney.id_client_num\r\n"
-        		+ "	WHERE clientnum.id_client=?";
+        		+ "	WHERE clientnum.id_client=? AND MVTMOBILEMONEY.validation=1";
         try{
         	// new Token().deleteToken(conn);
         	pst = conn.prepareStatement(sql);

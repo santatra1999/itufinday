@@ -52,25 +52,33 @@ public class Forfaitusage {
 		this.id_type_offre = id_type_offre;
 	}
 	
+	public Forfaitusage(int id_achat_offre, String date_usage, double nihena, int id_type_offre) {
+		super();
+		this.setId_achat_offre(id_achat_offre);
+		this.setDate_usage(date_usage);
+		this.setNihena(nihena);
+		this.setId_type_offre(id_type_offre);
+	}	
+	
 	public Forfaitusage() {
 		super();
 	}
 
-	public void save(Forfaitusage fu, Connection conn) throws SQLException {
+	public void save(Connection conn) throws SQLException {
         
 		PreparedStatement pst=null; 
         String sql="INSERT INTO FORFAITUSAGE VALUES(NEXTVAL('UsageForfait_Sequence'),?,?,?,?)";           
         
         try {        	
         	pst=conn.prepareStatement(sql);
-            pst.setInt(1, fu.getId_achat_offre());
-            pst.setString(2, fu.getDate_usage());
-            pst.setDouble(3, fu.getNihena());
-            pst.setInt(4, fu.getId_type_offre());
+            pst.setInt(1, this.getId_achat_offre());
+            pst.setString(2, this.getDate_usage());
+            pst.setDouble(3, this.getNihena());
+            pst.setInt(4, this.getId_type_offre());
             pst.executeUpdate(); 
-            conn.commit();
+            // conn.commit();
         } catch(Exception ex) {
-        	conn.rollback();
+        	// conn.rollback();
         	throw ex;
         } finally {
             if(pst!=null) pst.close();        

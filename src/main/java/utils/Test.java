@@ -24,6 +24,8 @@ public class Test {
 		Locale locale = new Locale("en", "US");      
 		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
 		System.out.println(currencyFormatter.format(amount));*/
+		Appel appel = new Appel("+243324323454", "+261324323454", 12, "2021-04-15T09:04:00Z");
+		new AppelDaoService().save(appel);
 	}
 
 }

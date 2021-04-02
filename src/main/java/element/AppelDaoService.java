@@ -17,7 +17,9 @@ import utils.Helper;
 
 @Component
 public class AppelDaoService {
+	
     public ArrayList<Appel> getHistoriqueAppel(int idclient) throws Exception {
+    	
     	ArrayList<Appel> appelList = new ArrayList<Appel>();
     	MongoDatabase database = null;
         MongoCursor<Document> cursor = null;
@@ -48,4 +50,24 @@ public class AppelDaoService {
         return appelList;
     }
     
+    public void save(Appel appel) throws Exception {
+    	
+    	MongoDatabase database = null;
+    	ArrayList<Document> docs = new ArrayList<>();
+    	MongoCollection<Document> collection = null;
+    	
+    	try {
+    		database = new Helper().getConnexionMongodb();
+	    	collection = database.getCollection("Appel");
+	    	Document d1 = new Document();
+	    	d1.append("numSender", appel.getNumSender());
+	    	d1.append("numRecep", appel.getNumRecep());
+	    	d1.append("duree", appel.getDuree());
+	    	d1.append("date", appel.getDate());
+	    	docs.add(d1); 
+	    	collection.insertMany(docs);
+	   } catch(Exception ex) {
+		   database.getCollection("Appel").drop();
+	   } 
+    }
 }

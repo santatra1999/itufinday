@@ -96,4 +96,29 @@ public class Clientnum {
 	
 		return id_client_num ;
 	}	
+	
+	public int getId_client_ById_client_num(int id_client_num, Connection conn) throws Exception {
+		
+		int id_client = 0;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String sql = "SELECT id_client from clientnum WHERE id_client_num=?";
+        
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, id_client_num);
+            rs = pst.executeQuery();
+            System.out.println(pst);
+            while(rs.next()) {
+            	id_client  = rs.getInt("id_client");
+            }
+        } catch(Exception e) {
+            throw e;
+        } finally {
+            if(pst!=null)pst.close();
+            if(rs!=null)rs.close();
+        }		
+	
+		return id_client;
+	}		
 }

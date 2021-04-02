@@ -13,7 +13,14 @@ public class Achatoffre {
 	private double valeur;
 	private double reste;
 	private String appel;
+	private int id_offre_and_type;
 	
+	public int getId_offre_and_type() {
+		return id_offre_and_type;
+	}
+	public void setId_offre_and_type(int id_offre_and_type) {
+		this.id_offre_and_type = id_offre_and_type;
+	}
 	public String getNom_type_offre() {
 		return nom_type_offre;
 	}
@@ -81,6 +88,21 @@ public class Achatoffre {
 		this.reste = reste;
 	}
 
+	public Achatoffre(int id_client,int id_achat_offre, int id_offre, int id_client_num, String dateachat, String date_expir,String nom_offre, String nom_type_offre, double valeur , double reste, String appel, int id_offre_and_type) {
+		super();
+		this.setId_achat_offre(id_achat_offre);
+		this.setId_offre(id_offre);
+		this.setId_client_num(id_client_num);
+		this.setDateachat(dateachat);
+		this.setDate_expir(date_expir);
+		this.setNom_offre(nom_offre);
+		this.setNom_type_offre(nom_type_offre);
+		this.setReste(reste);
+		this.setIdclient(id_client);
+		this.setAppel(appel);
+		this.setValeur(valeur);
+		this.setId_offre_and_type(id_offre_and_type);
+	}
 	public Achatoffre(int id_client,int id_achat_offre, int id_offre, int id_client_num, String dateachat, String date_expir,String nom_offre, String nom_type_offre, double valeur , double reste, String appel) {
 		super();
 		this.setId_achat_offre(id_achat_offre);
@@ -94,7 +116,7 @@ public class Achatoffre {
 		this.setIdclient(id_client);
 		this.setAppel(appel);
 		this.setValeur(valeur);
-	}
+	}	
 	public Achatoffre() {
 		super();
 	}

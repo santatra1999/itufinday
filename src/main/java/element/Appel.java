@@ -61,6 +61,14 @@ public class Appel {
 		this.setIdappel(idappel);
 	}
 
+	public Appel(String numSender, String numRecep, double duree, String date) {
+		super();
+		this.setNumSender(numSender);
+		this.setNumRecep(numRecep);
+		this.setDuree(duree);
+		this.setDate(date);
+	}	
+	
 	public Appel() {
 		super();
 	}
