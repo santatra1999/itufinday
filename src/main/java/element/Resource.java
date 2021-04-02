@@ -208,7 +208,7 @@ public class Resource {
 		return header;		
 	}	
 	
-	@GetMapping("/offreclient")
+	/*@GetMapping("/offreclient")
 	public Header getOffreClient(@RequestHeader("Authorization") String token) throws Exception {
 		Header header = new Header();
 		Object data = null;
@@ -223,7 +223,7 @@ public class Resource {
 			throw e;
 		}
 		return header;		
-	}	
+	}	*/
 	
 	@GetMapping("/depotvalide/{idmvt}")
 	public Header validationDepot(@PathVariable int idmvt) throws Exception {
@@ -598,7 +598,7 @@ public class Resource {
 		return header;
 	}
 	
-	@PostMapping("/achatoffre/")
+	/*@PostMapping("/achatoffre/")
 	public Header achatOffre(@RequestBody Achatoffre achatOffre, @RequestHeader("Authorization") String token) throws Exception {
 		Header header = new Header();
 		Object data = null;
@@ -612,7 +612,7 @@ public class Resource {
 			throw e;
 		}
 		return header;
-	}	
+	}*/	
 }
 
 
