@@ -1,16 +1,37 @@
 package element;
 
 public class Achatoffre {
+
+	private int idclient;
+	private int id_achat_offre;
+	private int id_offre;
+	private int id_client_num;
+	private String dateachat;
+	private String date_expir;
+	private String nom_offre;
+	private String nom_type_offre;
+	private double valeur;
+	private double reste;
+	private String appel;
 	
-	public int id_achat_offre;
-	public int id_offre;
-	int id_client_num;
-	String dateachat;
-	String date_expir;
-	String nom_offre;
-	double reste;
-	int idclient;
-	
+	public String getNom_type_offre() {
+		return nom_type_offre;
+	}
+	public void setNom_type_offre(String nom_type_offre) {
+		this.nom_type_offre = nom_type_offre;
+	}
+	public double getValeur() {
+		return valeur;
+	}
+	public void setValeur(double valeur) {
+		this.valeur = valeur;
+	}
+	public String getAppel() {
+		return appel;
+	}
+	public void setAppel(String appel) {
+		this.appel = appel;
+	}
 	public int getIdclient() {
 		return idclient;
 	}
@@ -60,7 +81,7 @@ public class Achatoffre {
 		this.reste = reste;
 	}
 
-	public Achatoffre(int id_achat_offre, int id_offre, int id_client_num, String dateachat, String date_expir,String nom_offre, double reste, int idclient) {
+	public Achatoffre(int id_client,int id_achat_offre, int id_offre, int id_client_num, String dateachat, String date_expir,String nom_offre, String nom_type_offre, double valeur , double reste, String appel) {
 		super();
 		this.setId_achat_offre(id_achat_offre);
 		this.setId_offre(id_offre);
@@ -68,8 +89,11 @@ public class Achatoffre {
 		this.setDateachat(dateachat);
 		this.setDate_expir(date_expir);
 		this.setNom_offre(nom_offre);
+		this.setNom_type_offre(nom_type_offre);
 		this.setReste(reste);
-		this.setIdclient(idclient);
+		this.setIdclient(id_client);
+		this.setAppel(appel);
+		this.setValeur(valeur);
 	}
 	public Achatoffre() {
 		super();

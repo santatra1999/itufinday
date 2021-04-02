@@ -26,7 +26,7 @@ public class AchatoffreDaoService {
         	pst.setInt(1, idclient);
             rs = pst.executeQuery();
             while(rs.next()){
-            	achatOffreList.add(new Achatoffre(rs.getInt("id_achat_offre"), rs.getInt("id_offre"), rs.getInt("id_client_num"), rs.getString("dateachat"), rs.getString("date_expir"), rs.getString("nom_offre"), rs.getDouble("reste"), rs.getInt("id_client")));
+            	achatOffreList.add(new Achatoffre(rs.getInt("id_client"), rs.getInt("id_achat_offre"), rs.getInt("id_offre"), rs.getInt("id_client_num"), rs.getString("dateachat"), rs.getString("date_expir"), rs.getString("nom_offre"), rs.getString("nom_type_offre"), rs.getDouble("valeur"), rs.getDouble("reste"), rs.getString("appel")));
             }
         }catch(Exception e){
             throw e;
@@ -38,7 +38,7 @@ public class AchatoffreDaoService {
 		return achatOffreList;
 	}
 	
-/*	public void save(Achatoffre achatOffre, Connection conn) throws Exception {
+	public void save(Achatoffre achatOffre, Connection conn) throws Exception {
         PreparedStatement pst=null; 
         String sql = "INSERT INTO ACHATOFFRE VALUES(NEXTVAL('ID_OFFRE_Sequence'),?,?,NOW())";           
         
@@ -63,13 +63,15 @@ public class AchatoffreDaoService {
         	double credit = new ClientDaoService().getCreditClient(id_client);
         	Offre offre = new OffreDaoService().getOffreByIdoffre(achatOffre.getId_offre());
         	if(credit < offre.getValue()) {
-        		throw new Exception("Credit");
+        		throw new Exception("Credit insuffisant");
         	}
         	int id_client_num = new Clientnum().getId_client_numById_client(id_client, conn);
         	achatOffre.setId_client_num(id_client_num);
         	this.save(achatOffre, conn);
+        	conn.commit();
         } catch(Exception ex) {
-            throw ex;
+        	conn.rollback();
+        	throw ex;
         } finally {
             if(conn!=null) conn.close();        
         }			
