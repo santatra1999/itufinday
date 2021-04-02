@@ -18,7 +18,7 @@ public class AchatoffreDaoService {
         ResultSet rs = null;
         Connection conn = null;
         
-        String sql = "SELECT * FROM V_RESTE_ACHAT_OFFRE where id_client=?";
+        String sql = "SELECT * FROM V_RESTE_ACHAT_OFFRE where id_client=? ORDER BY dateachat DESC";
         try{
             conn = new Helper().getConnexionPsql();
             //new Token().deleteToken(conn);
