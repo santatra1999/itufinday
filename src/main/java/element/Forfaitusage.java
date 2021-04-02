@@ -67,7 +67,7 @@ public class Forfaitusage {
 	public void save(Connection conn) throws SQLException {
         
 		PreparedStatement pst=null; 
-        String sql="INSERT INTO FORFAITUSAGE VALUES(NEXTVAL('UsageForfait_Sequence'),?,?,?,?)";           
+        String sql="INSERT INTO FORFAITUSAGE VALUES(NEXTVAL('UsageForfait_Sequence'),?,?::timestamp(0),?,?)";           
         
         try {        	
         	pst=conn.prepareStatement(sql);
@@ -75,6 +75,7 @@ public class Forfaitusage {
             pst.setString(2, this.getDate_usage());
             pst.setDouble(3, this.getNihena());
             pst.setInt(4, this.getId_type_offre());
+            System.out.println(pst);
             pst.executeUpdate(); 
             // conn.commit();
         } catch(Exception ex) {

@@ -1,7 +1,6 @@
 package element;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import utils.Helper;
@@ -36,17 +35,15 @@ public class Simulation {
         }
     }	
     
-    public int simulateAppel(int ID_CLIENT_NUM, String appeleur, String appele, String dateDeCheck, int duree) throws Exception{
+    public int getDureeSimulationAppel(int ID_CLIENT_NUM, String appeleur, String appele, String dateDeCheck, int duree, Connection conn) throws Exception{
         
     	int dureeAppel = 0;
         String typeOffre = "APPEL";
-        Connection conn = null;
-        int similarity = getSimilarityOperateur(appeleur,appele);
+        int similarity = this.getSimilarityOperateur(appeleur,appele);
         int i = 0;
         double coutAppel = 0.0;
         Coutappel cout = null;
         try {
-	        conn = new Helper().getConnexionPsql();
 	        int id_client = new Clientnum().getId_client_ById_client_num(ID_CLIENT_NUM, conn);
 	        double credit = new ClientDaoService().getCreditClient(id_client, conn);
 	        ArrayList <Achatoffre> offres = new AchatoffreDaoService().getResteAchatOffre(ID_CLIENT_NUM,dateDeCheck,typeOffre, conn);       
@@ -107,14 +104,28 @@ public class Simulation {
 	                }
 	            }
 	        }
-	    conn.commit();
         } catch(Exception ex) {
-        	conn.rollback();
         	throw ex;
-        } finally {
-        	if(conn!=null)conn.close();
-        }
+        } 
         return dureeAppel;
         
-    }    
+    }   
+    
+    public void simulationAppel(int ID_CLIENT_NUM, String appeleur, String appele, String dateDeCheck, int duree) throws Exception {
+    	
+    	Connection conn = null;
+    	try {
+	    	conn = new Helper().getConnexionPsql();
+    		int dureeSimulation = this.getDureeSimulationAppel(ID_CLIENT_NUM, appeleur, appele, dateDeCheck, duree, conn);
+	    	Appel appel = new Appel(appeleur, appele, dureeSimulation, dateDeCheck);
+	    	new AppelDaoService().save(appel);
+	    	conn.commit();
+    	} catch(Exception ex) {
+    		conn.rollback();
+    		throw ex;
+    	} finally {
+    		if(conn!=null) conn.close();
+    	} 
+    	
+    }
 }

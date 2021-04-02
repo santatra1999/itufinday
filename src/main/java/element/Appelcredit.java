@@ -60,6 +60,7 @@ public class Appelcredit {
             pst.setInt(1, this.getId_client_num());
             pst.setDouble(2, this.getValeur());
             pst.setString(3, this.getDate_depense());
+            System.out.println(pst);
             pst.executeUpdate(); 
             //conn.commit();
         } catch(Exception ex) {

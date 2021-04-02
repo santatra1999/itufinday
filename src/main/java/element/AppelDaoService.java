@@ -53,7 +53,7 @@ public class AppelDaoService {
         return appelList;
     }
     
-    public void save(Appel appel) throws Exception {
+    /*public void save(Appel appel) throws Exception {
     	
     	MongoDatabase database = null;
     	ArrayList<Document> docs = new ArrayList<>();
@@ -72,5 +72,27 @@ public class AppelDaoService {
 	   } catch(Exception ex) {
 		   database.getCollection("Appel").drop();
 	   } 
-    }
+    }*/
+    
+	public void save(Appel appel) throws Exception {
+		
+		MongoDatabase database = null;
+		MongoCollection<Document> collection = null;
+		
+		try {
+			
+			database = new Helper().getConnexionMongodb();
+			collection = database.getCollection("Appel");
+			Document d = new Document();
+			d.put("numSender", appel.getNumSender());
+			d.put("numRecep", appel.getNumRecep());
+			d.put("duree", appel.getDuree());
+			d.put("date", appel.getDate());
+			collection.insertOne(d);
+			System.out.println("insertion reussie");
+		} catch(Exception e) {
+			throw e;
+		} 
+
+	}   
 }
