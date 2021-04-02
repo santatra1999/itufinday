@@ -23,7 +23,7 @@ public class AppelDaoService {
     	ArrayList<Appel> appelList = new ArrayList<Appel>();
     	MongoDatabase database = null;
         MongoCursor<Document> cursor = null;
-        List<Document> res = new ArrayList<>();
+        //List<Document> res = new ArrayList<>();
         Connection conn = null;
 	    try {
         	conn = new Helper().getConnexionPsql();
@@ -33,13 +33,16 @@ public class AppelDaoService {
 	        String numClient = new ClientDaoService().getClientnumById(idclient, conn);
 	        FindIterable<Document> iterDoc = collection.find(or(eq("numSender", numClient), eq("numRecep", numClient))).sort(new Document("date", +1));
 	        cursor = iterDoc.cursor();
-	        res = new ArrayList<>();
+	        //res = new ArrayList<>();
 	        while(cursor.hasNext()) {
-	            res.add(cursor.next());
+	        	Document d=cursor.next();
+	        	//res.add(cursor.next());
+	        	Appel appel = new Appel(d.getObjectId("_id"), d.getString("numSender"), d.getString("numRecep"), d.getDouble("duree"), d.get("date").toString());
+	        	appelList.add(appel);
 	        }
-	        for(Document doc: res) {
-	        	appelList.add(new Appel(doc.getObjectId("_id").toString(), doc.getString("numSender"), doc.getString("numRecep"), doc.getDouble("duree"), doc.getDate("date").toString()));
-	        }
+	        //for(Document doc: res) {
+	        //	appelList.add(new Appel(doc.getObjectId("_id").toString(), doc.getString("numSender"), doc.getString("numRecep"), doc.getDouble("duree"), doc.getDate("date").toString()));
+	        //}
 	    } catch(Exception ex) {
 	    	throw ex;
 	    } finally {

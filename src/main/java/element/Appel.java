@@ -1,8 +1,10 @@
 package element;
 
+import org.bson.types.ObjectId;
+
 public class Appel {
 
-	String idappel;
+	ObjectId idappel;
 
 	String numSender;
 
@@ -12,11 +14,11 @@ public class Appel {
 
 	String date;
 
-	public String getIdappel() {
+	public ObjectId getIdappel() {
 		return idappel;
 	}
 
-	public void setIdappel(String idappel) {
+	public void setIdappel(ObjectId idappel) {
 		this.idappel = idappel;
 	}
 
@@ -52,7 +54,7 @@ public class Appel {
 		this.date = date;
 	}
 
-	public Appel(String idappel, String numSender, String numRecep, double duree, String date) {
+	public Appel(ObjectId idappel, String numSender, String numRecep, double duree, String date) {
 		super();
 		this.setNumSender(numSender);
 		this.setNumRecep(numRecep);
